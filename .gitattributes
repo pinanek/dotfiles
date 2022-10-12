@@ -1,0 +1,5 @@
+# Set the default behavior.
+* text=auto
+
+# Windows files.
+windows/* text eol=crlf
