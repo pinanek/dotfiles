@@ -38,7 +38,7 @@ blocks:
         background: "#dee2e6"
         foreground: "p:black"
         leading_diamond: "<transparent,background>\ue0b0</>"
-        template: " {{ path .PWD .Location }} "
+        template: " {{ .PWD }} "
         trailing_diamond: "\ue0b0"
 
       - type: git
