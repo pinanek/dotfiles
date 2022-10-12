@@ -6,7 +6,7 @@ My crappy dotfiles 😎
 
 This repo contains Windows configs in [`windows`](windows/) folders and my custom [Oh My Posh](https://ohmyposh.dev/) theme.
 
-Linux coming soon 😉.s
+Linux coming soon 😉.
 
 ## What configs that i included?
 
