@@ -1,4 +1,4 @@
-# Pinanek23's Dotfiles
+# Pinanek's Dotfiles
 
 My crappy dotfiles 😎
 
