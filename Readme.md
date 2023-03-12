@@ -26,3 +26,9 @@ This repo contains:
 ## Disclaimer
 
 Checkout those configs before using. Use they at your own risk 😏.
+
+## Licenses
+
+Files not under any explicit licenses are under MIT License. See [LICENSE](LICENSE).
+
+Fonts, patched fonts are licensed under SIL Open Font License, Version 1.1. See [LICENSE-OFL](LICENSE-OFL).
