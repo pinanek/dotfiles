@@ -1,14 +1,14 @@
 # Pinanek's Dotfiles
 
-My crappy dotfiles 😎
+My crappy dotfiles 😎.
 
 ## What is this?
 
 This repo contains:
 
-- Windows configs in [`windows`](windows/) folders
-- My custom [Oh My Posh](https://ohmyposh.dev/) theme.
-- Customized [Recursive](https://www.recursive.design/) fonts (Patched [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) included).
+- Windows configs in [`windows`](windows/) folders.
+- My custom [Oh My Posh](https://ohmyposh.dev) theme.
+- My customized [Recursive](https://www.recursive.design) fonts (Patched [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) included).
 
 ## What configs that i included?
 

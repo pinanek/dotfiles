@@ -57,7 +57,7 @@ blocks:
       - type: executiontime
         style: plain
         foreground: p:green
-        template: "{{ if eq .Code 0 }}\ufbab{{ .FormattedMs  }}{{ end }}"
+        template: "{{ if eq .Code 0 }}\ufbab{{ .FormattedMs }}{{ end }}"
         properties:
           threshold: 1
           style: austin
