@@ -1,0 +1,28 @@
+# pinanek's dotfiles
+
+My dotfiles for macOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
+
+## Overview
+
+- Theme: [Catppina](https://github.com/pinanek/catppina) - My custom them based on [Catpppuccin](https://catppuccin.com/).
+- Font: [Cartograph CF](https://connary.com/fonts/cartograph).
+- Terminal: [Ghostty](https://ghostty.org).
+- Editor: [Helix](https://helix-editor.com/).
+- Shell: [Fish](https://fishshell.com/).
+- Prompt: [Hydro](https://github.com/pinanek/hydro) - My fork of [jorgebucaran/hydro](https://github.com/jorgebucaran/hydro).
+- Dev env: [Mise](https://mise.jdx.dev/).
+- Multiplexer: [Tmux](https://github.com/tmux/tmux).
+- Others: [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`fzf`](https://github.com/junegunn/fzf) [`lazygit`](https://github.com/jesseduffield/lazygit), [`vivid`](https://github.com/sharkdp/vivid), [`yazi`](https://github.com/sxyazi/yazi).
+
+## Installation
+
+```shell
+curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/bootstrap.sh | bash
+```
+
+Automatically installs and configures dotfiles based on:
+
+- Hostname:
+  - `PinaMac`: MacOS
+  - `PinaServer`: Ubuntu
+- Fallback by OS detection: `Ubuntu`.

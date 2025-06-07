@@ -1,0 +1,38 @@
+[tools]
+"pipx:basedpyright" = "latest"
+"npm:@microsoft/compose-language-service" = "latest"
+"npm:bash-language-server" = "latest"
+"npm:dockerfile-language-server-nodejs" = "latest"
+"npm:fish-lsp" = "latest"
+"npm:prettier" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+"npm:yaml-language-server" = "latest"
+
+marksman = "latest"
+ruff = "latest"
+shfmt = "latest"
+taplo = "latest"
+uv = "latest"
+
+{{- if or (eq .machine "PinaServer") (eq .machine "Ubuntu") }}
+bat = "latest"
+eza = "latest"
+fzf = "latest"
+lazygit = "latest"
+tmux = "latest"
+vivid = "latest"
+yazi = "latest"
+{{- end }}
+
+bun = "latest"
+node = "22"
+rust = { version = "latest", components = "rust-analyzer" }
+python = "3.13"
+
+[settings]
+experimental = true
+python.uv_venv_auto = false
+idiomatic_version_file_enable_tools = ["python"]
+
+[settings.pipx]
+uvx = true

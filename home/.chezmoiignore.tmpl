@@ -1,0 +1,16 @@
+{{ if ne .machine "PinaMac" }}
+.chezmoiscripts/PinaMac/**
+.config/ghostty
+{{ end }}
+
+{{ if ne .machine "PinaServer" }}
+.chezmoiscripts/PinaServer/**
+{{ end }}
+
+{{ if ne .machine "Ubuntu" }}
+.chezmoiscripts/Ubuntu/**
+{{ end }}
+
+{{ if and (eq .chezmoi.os "linux") (not (hasPrefix .machine "Pina")) }}
+.bashrc
+{{ end }}

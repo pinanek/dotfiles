@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+{{ template "scripts/env.sh.tmpl" . }}
+{{ template "scripts/utils.sh.tmpl" . }}
+
+echo
+log debug 'Installing `brew`...'
+
+if [ ! -f /opt/homebrew/bin/brew ]; then
+  sudo echo -n
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  log success '`brew` is installed.'
+else
+  log info '`brew` is already installed.'
+fi

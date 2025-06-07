@@ -1,0 +1,72 @@
+[[language]]
+name = "bash"
+auto-format = true
+formatter = { command = "dprint", args = ["fmt", "--stdin", "sh"] }
+
+[[language]]
+name = "css"
+auto-format = true
+formatter = { command = 'prettier', args = ["--parser", "css"] }
+
+[[language]]
+name = "fish"
+auto-format = true
+language-servers = ["fish-lsp"]
+formatter = { command = "fish_indent" }
+
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "json"] }
+
+[[language]]
+name = "jsonc"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "jsonc"] }
+
+[[language]]
+name = "html"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "html"] }
+
+[[language]]
+name = "markdown"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "markdown"] }
+
+[[language]]
+name = "toml"
+auto-format = true
+language-servers = ["taplo"]
+formatter = { command = "taplo", args = ["format", "-"] }
+
+[[language]]
+name = "yaml"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "yaml"] }
+
+[[language]]
+name = "python"
+auto-format = true
+language-servers = ["basedpyright", "ruff"]
+formatter = { command = "ruff", args = ["format", "-"] }
+
+# LSP config stuff
+# Python
+[language-server.basedpyright.config]
+basedpyright.analysis.typeCheckingMode = "standard"
+basedpyright.disableOrganizeImports = true
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+
+# Fish
+[language-server.fish-lsp]
+command = "fish-lsp"
+args = ["start"]
+environment = { "fish_lsp_show_client_popups" = "false" }
+
+# TOML
+[language-server.taplo.config]
+root_dir = [".git", "*.toml"]

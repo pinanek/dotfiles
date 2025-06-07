@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+{{ template "scripts/env.sh.tmpl" . }}
+{{ template "scripts/utils.sh.tmpl" . }}
+
+function install() {
+  local bin=$1
+  shift
+
+  local packages=("${@}")
+  local installed_packages="$($bin list)"
+
+  for package in "${packages[@]}"; do
+    if ! echo $installed_packages | grep $package &>/dev/null; then
+      log info "- \`$package\`..."
+      $bin install $package
+    fi
+  done
+}
+
+formulae=("bat" "eza" "fastfetch" "fish" "fzf" "gh" "git" "gnupg" "mas" "mise" "ouch" "tmux" "vivid" "yazi" "wget")
+casks=("cleanupbuddy" "crystalfetch" "cyberduck" "discord" "firefox@developer-edition" "font-symbols-only-nerd-font" "ghostty" "google-chrome@dev" "hex-fiend" "httpie" "iina" "jordanbaird-ice" "keepingyouawake" "keka" "kekaexternalhelper" "mac-mouse-fix" "maccy" "messenger" "orion" "pearcleaner" "telegram" "transmission" "utm"
+)
+
+echo
+log debug "Installing packages..."
+
+log debug "Installing formulae..."
+install brew $(echo "${formulae[@]}")
+
+log debug "Installing casks..."
+install brew $(echo "${casks[@]}")
+
+log success 'All package are installed.'
