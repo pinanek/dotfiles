@@ -2,6 +2,10 @@
 
 My dotfiles for macOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
 
+<p align="center">
+  <img src="assets/preview.png" alt="An image of helix and tmux" />
+</p>
+
 ## Overview
 
 - Theme: [Catppina](https://github.com/pinanek/catppina) - My custom them based on [Catpppuccin](https://catppuccin.com/).
