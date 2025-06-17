@@ -12,10 +12,6 @@ marker_cut = { fg = "#f88d8e", bg = "#f88d8e" }
 marker_marked = { fg = "#7ecebe", bg = "#7ecebe" }
 marker_selected = { fg = "#9ccfe9", bg = "#9ccfe9" }
 
-tab_active = { fg = "#19191a", bg = "#c3c3c4" }
-tab_inactive = { fg = "#c3c3c4", bg = "#323233" }
-tab_width = 1
-
 count_copied = { fg = "#19191a", bg = "#7fc7a4" }
 count_cut = { fg = "#19191a", bg = "#f88d8e" }
 count_selected = { fg = "#19191a", bg = "#9ccfe9" }
@@ -24,6 +20,10 @@ border_symbol = "│"
 border_style = { fg = "#757576" }
 
 syntect_theme = "~/.config/yazi/Catppuccin-mocha.tmTheme"
+
+[tabs]
+active = { fg = "#19191a", bg = "#c3c3c4", bold = true }
+inactive = { fg = "#c3c3c4", bg = "#323233" }
 
 [mode]
 normal_main = { fg = "#19191a", bg = "#9ccfe9", bold = true }
