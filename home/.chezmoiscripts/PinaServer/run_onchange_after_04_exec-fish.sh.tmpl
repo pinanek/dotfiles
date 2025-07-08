@@ -14,10 +14,10 @@ else
   cat >>$HOME/.bashrc <<'EOF'
 
 # Setting fish as interactive shell
-if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} && ${SHLVL} == 1 ]]
+if [[ $(/usr/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
 then
-	shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=''
-	exec fish $LOGIN_OPTION
+  shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+  exec /usr/bin/fish $LOGIN_OPTION
 fi
 EOF
   log success '`exec fish` has been added to `~/.bashrc`'
