@@ -9,7 +9,7 @@ echo
 log debug 'Installing mise...'
 
 if ! command -v mise &>/dev/null; then
-  curl -s https://mise.run | MISE_VERSION=v2025.5.16 sh >/dev/null
+  curl -s https://mise.run | sh >/dev/null
 fi
 
 log success '`mise` is installed.'
