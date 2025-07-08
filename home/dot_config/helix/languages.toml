@@ -1,53 +1,53 @@
 [[language]]
 name = "bash"
+indent = { tab-width = 2, unit = "  " }
+formatter = { command = "shfmt", args = ["-i", "2"] }
 auto-format = true
-formatter = { command = "dprint", args = ["fmt", "--stdin", "sh"] }
 
 [[language]]
 name = "css"
+formatter = { command = "prettier", args = ["--parser", "json"] }
 auto-format = true
-formatter = { command = 'prettier', args = ["--parser", "css"] }
 
 [[language]]
 name = "fish"
-auto-format = true
 language-servers = ["fish-lsp"]
 formatter = { command = "fish_indent" }
+auto-format = true
 
 [[language]]
 name = "json"
-auto-format = true
 formatter = { command = "prettier", args = ["--parser", "json"] }
+auto-format = true
 
 [[language]]
 name = "jsonc"
-auto-format = true
 formatter = { command = "prettier", args = ["--parser", "jsonc"] }
+auto-format = true
 
 [[language]]
 name = "html"
-auto-format = true
 formatter = { command = "prettier", args = ["--parser", "html"] }
+auto-format = true
 
 [[language]]
 name = "markdown"
-auto-format = true
 formatter = { command = "prettier", args = ["--parser", "markdown"] }
+auto-format = true
 
 [[language]]
 name = "toml"
-auto-format = true
 language-servers = ["taplo"]
 formatter = { command = "taplo", args = ["format", "-"] }
+auto-format = true
 
 [[language]]
 name = "yaml"
-auto-format = true
 formatter = { command = "prettier", args = ["--parser", "yaml"] }
+auto-format = true
 
 [[language]]
 name = "python"
-auto-format = true
 language-servers = ["basedpyright", "ruff"]
 formatter = { command = "ruff", args = ["format", "-"] }
 
