@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+{{ template "scripts/env.sh.tmpl" . }}
+{{ template "scripts/utils.sh.tmpl" . }}
+
+echo
+log debug 'Installing mise...'
+
+if ! command -v mise &>/dev/null; then
+  curl -s https://mise.run | sh >/dev/null
+fi
+
+log success '`mise` is installed.'
