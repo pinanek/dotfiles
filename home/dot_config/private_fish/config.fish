@@ -1,6 +1,3 @@
-# Mise
-mise activate fish | source
-
 # Env vars
 set -gx SHELL (which fish)
 set -gx EDITOR (which hx)
@@ -12,6 +9,9 @@ set -gx XDG_DATA_HOME $HOME/.local/share
 set -gx XDG_STATE_HOME $HOME/.local/state
 
 fish_add_path -ga $XDG_BIN_HOME
+
+# Mise
+mise activate fish | source
 
 if status is-interactive
     set fish_greeting
