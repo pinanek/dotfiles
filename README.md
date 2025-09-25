@@ -21,7 +21,7 @@ My dotfiles for MacOS and Linux, managed with [lnk](https://github.com/yarlson/l
 ## Installation
 
 ```shell
-curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/init.sh {machine} | bash
+curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/init.sh | bash -s -- {machine}
 ```
 
 Available machines:
