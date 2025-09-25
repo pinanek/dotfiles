@@ -78,8 +78,8 @@ function main() {
 
   log info "Machine: $input_machine"
   log info "Installing \`lnk\`..."
-  # curl -sSL https://raw.githubusercontent.com/yarlson/lnk/main/install.sh | bash
-
+  curl -sSL https://raw.githubusercontent.com/yarlson/lnk/main/install.sh | bash
+  lnk pull --host $input_machine
   machine=$input_machine lnk bootstrap
 }
 

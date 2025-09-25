@@ -1,6 +1,6 @@
 # pinanek's dotfiles
 
-My dotfiles for MacOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
+My dotfiles for MacOS and Linux, managed with [lnk](https://github.com/yarlson/lnk).
 
 <p align="center">
   <img src="assets/preview.png" alt="An image of helix and tmux" />
