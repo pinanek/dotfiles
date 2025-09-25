@@ -1,9 +1,0 @@
-{{- $machines := list "PinaMac" "PinaServer" "Ubuntu" -}}
-{{- $machine := promptString "machine" -}}
-{{- if not (has $machine $machines) -}}
-  {{- writeToStdout (printf "Invalid value for $machine. Please choose from: %s\n" ($machines | join ", ")) -}}
-  {{- exit 1 -}}
-{{- end -}}
-
-[data]
-machine = "{{ $machine }}"

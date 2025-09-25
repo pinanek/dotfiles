@@ -1,9 +1,4 @@
-#!/usr/bin/env bash
-
-set -eufo pipefail
-
-available_hosts=('PinaMac' 'PinaServer')
-available_oses=('Ubuntu')
+#/usr/bin/env bash
 
 function log() {
   local level="$1"
@@ -41,73 +36,15 @@ function log() {
   fi
 }
 
-function setup_env() {
-  echo
-  log debug 'Setting up enviroment variables...'
-
-  export XDG_BIN_HOME="${XDG_BIN_HOME:-$HOME/.local/bin}"
-
-  if [[ ":$PATH:" != *":$XDG_BIN_HOME:"* ]]; then
-    export PATH="$XDG_BIN_HOME:$PATH"
-  fi
-
-  log success 'Environment variables is set up.'
-}
-
-function detect_machine() {
-  local machine=""
-
-  local hostname=$(hostname)
-  if [[ " ${available_hosts[*]} " =~ " $hostname " ]]; then
-    machine="$hostname"
-  else
-    local os_type=$(uname -s)
-    if [[ "$os_type" == 'Linux' ]] && [[ -f /etc/os-release ]]; then
-      source /etc/os-release
-      machine="${ID^}"
-    elif [[ "$os_type" == 'Darwin' ]]; then
-      machine='MacOS'
-    fi
-  fi
-
-  # Validate machine
-  if [[ ! " ${available_hosts[*]} ${available_oses[*]} " =~ " $machine " ]]; then
-    machine="Unknown"
-  fi
-
-  echo "$machine"
-}
-
-function install_chezmoi() {
-  echo
-  log debug 'Installing `chezmoi`...'
-
-  if command -v chezmoi >/dev/null 2>&1; then
-    log info '`chezmoi` is alreay installed.'
-    return
-  fi
-
-  sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $XDG_BIN_HOME
-
-  log success "\`chezmoi\` is installed to \"$XDG_BIN_HOME\"."
-}
-
 function main() {
-  log debug 'Detecting the current machine...'
-  local machine=$(detect_machine)
-  if [[ "$machine" == "Unknown" ]]; then
-    log error "Unsupported machine. Supported hosts: ${available_hosts[*]} and OSes: ${available_oses[*]}"
+  lnk_dir="$XDG_CONFIG_HOME/lnk"
+
+  if [[ -z "$machine" ]]; then
+    log error "\$machine variable is not set."
     exit 1
   fi
-  log info "Machine: $machine"
 
-  setup_env
-  install_chezmoi
-
-  echo
-  log debug 'Installing dotfiles...'
-  chezmoi init --apply https://github.com/pinanek/dotfiles --promptString machine=$machine
-  log sucess "dotfiles for $machine is installed."
+  . "$lnk_dir/bootstrap.${machine}.sh"
 }
 
 main

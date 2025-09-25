@@ -21,12 +21,10 @@ My dotfiles for MacOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
 ## Installation
 
 ```shell
-curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/init.sh {machine} | bash
 ```
 
-Automatically installs and configures dotfiles based on:
+Available machines:
 
-- Hostname:
-  - `PinaMac`: MacOS
-  - `PinaServer`: Ubuntu
-- Fallback by OS detection: `Ubuntu`
+- `pina-mac`: MacOS
+- `ubuntu`: Ubuntu
