@@ -129,7 +129,7 @@ function main() {
   dotfiles_repo="pinanek/dotfiles"
   dotfiles_dir="$XDG_DATA_HOME/dotfiles"
 
-  # doot bootstrap pinanek/dotfiles $dotfiles_dir
+  doot bootstrap pinanek/dotfiles $dotfiles_dir
   . "$dotfiles_dir/scripts/bootstrap.$(hostname).sh"
 }
 
