@@ -71,3 +71,5 @@ function main() {
   build_bat_cache
   build_mosh
 }
+
+main
