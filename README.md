@@ -1,6 +1,6 @@
 # pinanek's dotfiles
 
-My dotfiles for MacOS and Linux, managed with [lnk](https://github.com/yarlson/lnk).
+My dotfiles for MacOS and Linux, managed with [doot](https://github.com/pol-rivero/doot).
 
 <p align="center">
   <img src="assets/preview.png" alt="An image of helix and tmux" />
@@ -21,10 +21,10 @@ My dotfiles for MacOS and Linux, managed with [lnk](https://github.com/yarlson/l
 ## Installation
 
 ```shell
-curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/init.sh | bash -s -- {machine}
+curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/scripts/bootstrap.sh | bash
 ```
 
 Available machines:
 
-- `pina-mac`: MacOS
+- `PinaMac`: MacOS
 - `ubuntu`: Ubuntu

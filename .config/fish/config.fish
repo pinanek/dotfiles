@@ -1,21 +1,24 @@
-# Env vars
+# Environment variables
 set -gx SHELL (which fish)
 set -gx EDITOR (which hx)
 
-set -gx XDG_BIN_HOME $HOME/.local/bin
 set -gx XDG_CONFIG_HOME $HOME/.config
 set -gx XDG_CACHE_HOME $HOME/.cache
 set -gx XDG_DATA_HOME $HOME/.local/share
 set -gx XDG_STATE_HOME $HOME/.local/state
+set -gx XDG_BIN_HOME $HOME/.local/bin
 
+# PATH
 fish_add_path -ga $XDG_BIN_HOME
 
 # Mise
 mise activate fish | source
 
 if status is-interactive
+    # Disable greeting message
     set fish_greeting
 
+    # Color stuff
     fish_config theme choose catppina
     set -gx LS_COLORS (vivid generate $XDG_CONFIG_HOME/vivid/catppina.yaml)
 

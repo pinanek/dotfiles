@@ -1,0 +1,20 @@
+target_dir = "$HOME"
+
+exclude_files = [
+  "assets/*",
+  "scripts/*",
+  ".git/**/*",
+  ".gitignore",
+  "LICENSE",
+  "README.md",
+]
+
+explore_excluded_dirs = false
+
+implicit_dot = false
+
+diff_command = "diff --unified --color=always"
+
+[hosts]
+PinaMac = "hosts/pina_mac"
+ubuntu = "hosts/ubuntu"

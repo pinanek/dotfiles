@@ -1,0 +1,9 @@
+[tools]
+gh = "latest"
+bat = "latest"
+eza = "latest"
+fzf = "latest"
+lazygit = "latest"
+tmux = "latest"
+vivid = "latest"
+yazi = "latest"
