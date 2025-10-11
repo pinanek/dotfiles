@@ -101,9 +101,9 @@ function change_default_shell() {
   fi
 }
 function main() {
-  prepare_env
+  upgrade_system
+  install_packages
 
-  install_brew
   install_mise
   install_rust
 
