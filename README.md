@@ -1,6 +1,6 @@
 # pinanek's dotfiles
 
-My dotfiles for MacOS and Linux, managed with [doot](https://github.com/pol-rivero/doot).
+My dotfiles for MacOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
 
 <p align="center">
   <img src="assets/preview.png" alt="An image of helix and tmux" />
@@ -12,19 +12,19 @@ My dotfiles for MacOS and Linux, managed with [doot](https://github.com/pol-rive
 - Font: [Cartograph CF](https://connary.com/fonts/cartograph).
 - Terminal: [Ghostty](https://ghostty.org).
 - Editor: [Helix](https://helix-editor.com/).
-- Shell: [Fish](https://fishshell.com/).
-- Prompt: [Hydro](https://github.com/pinanek/hydro) - My fork of [jorgebucaran/hydro](https://github.com/jorgebucaran/hydro).
+- Shell: [Zsh](https://www.zsh.org/).
+- Prompt: [Pure](https://github.com/sindresorhus/pure)
 - Dev env: [Mise](https://mise.jdx.dev/).
-- Multiplexer: [Tmux](https://github.com/tmux/tmux).
-- Others: [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`fzf`](https://github.com/junegunn/fzf) [`lazygit`](https://github.com/jesseduffield/lazygit), [`vivid`](https://github.com/sharkdp/vivid), [`yazi`](https://github.com/sxyazi/yazi).
+- Others: [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`fzf`](https://github.com/junegunn/fzf) [`gitui`](https://github.com/gitui-org/gitui), [`vivid`](https://github.com/sharkdp/vivid), [`yazi`](https://github.com/sxyazi/yazi), etc.
 
 ## Installation
 
 ```shell
-curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/scripts/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/scripts/install.sh | bash
 ```
 
-Available machines:
+Automatically installs and configures dotfiles based on:
 
-- `PinaMac`: MacOS
-- `ubuntu`: Ubuntu
+- Hostname:
+  - `PinaMac`: MacOS
+- Fallback by OS detection: `ubuntu`, `fedora`.

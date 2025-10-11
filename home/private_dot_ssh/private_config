@@ -1,0 +1,8 @@
+Host *
+  ServerAliveInterval 60
+  ServerAliveCountMax 3
+
+  # Share SSH connections
+  ControlMaster auto
+  ControlPersist 600
+  ControlPath ~/.ssh/-%r@%h:%p

@@ -1,0 +1,28 @@
+[tools]
+"pipx:basedpyright" = "latest"
+"npm:@microsoft/compose-language-service" = "latest"
+"npm:bash-language-server" = "latest"
+"npm:dockerfile-language-server-nodejs" = "latest"
+"npm:fish-lsp" = "latest"
+"npm:prettier" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+"npm:yaml-language-server" = "latest"
+
+marksman = "latest"
+shfmt = "latest"
+taplo = "latest"
+uv = "latest"
+ruff = "latest"
+npm = "latest"
+pnpm = "latest"
+
+node = "22"
+python = "3.13"
+
+[settings]
+experimental = true
+python.uv_venv_auto = false
+idiomatic_version_file_enable_tools = ["python"]
+
+[settings.pipx]
+uvx = true
