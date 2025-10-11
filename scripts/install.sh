@@ -2,6 +2,9 @@
 
 set -eufo pipefail
 
+available_hosts=('PinaMac')
+available_oses=('ubuntu' 'fedora')
+
 function log() {
   local level="$1"
   shift
@@ -76,13 +79,13 @@ function detect_machine() {
       source /etc/os-release
       machine="${ID,,}"
     elif [[ "$os_type" == 'Darwin' ]]; then
-      machine='MacOS'
+      machine='macos'
     fi
   fi
 
   # Validate machine
   if [[ ! " ${available_hosts[*]} ${available_oses[*]} " =~ " $machine " ]]; then
-    machine="Unknown"
+    machine="unknown"
   fi
 
   echo "$machine"
@@ -90,6 +93,10 @@ function detect_machine() {
 function main() {
   log debug 'Detecting the current machine...'
   local machine=$(detect_machine)
+  if [[ "$machine" == "Unknown" ]]; then
+    log error "Unsupported machine. Supported hosts: ${available_hosts[*]} and OSes: ${available_oses[*]}"
+    exit 1
+  fi
   log info "Machine: \"$machine\""
 
   prepare_env
