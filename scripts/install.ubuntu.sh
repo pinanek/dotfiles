@@ -31,6 +31,7 @@ function install_rust() {
   echo
   log info 'Installing `rust` using `rustup`...'
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  source $HOME/.zshenv
   log success '`rust` is installed!'
 
   log info 'Installing `cargo` packages...'

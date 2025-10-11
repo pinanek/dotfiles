@@ -8,8 +8,8 @@ function upgrade_system() {
 function install_packages() {
   echo
   log info 'Setting up RPM Fusion...'
-  sudo rpm -Uvh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-  sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  sudo rpm -Uvh http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm || true
+  sudo rpm -Uvh http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm || true
   log success 'RPM Fusion is installed.'
 
   echo
@@ -38,6 +38,7 @@ function install_rust() {
   echo
   log info 'Installing `rust` using `rustup`...'
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  source $HOME/.zshenv
   log success '`rust` is installed!'
 
   log info 'Installing `cargo` packages...'
