@@ -8,7 +8,7 @@ function upgrade_system() {
 function install_packages() {
   echo
   log info "Installing packages..."
-  DEBIAN_FRONTEND=noninteractive sudo apt install -y build-essential zsh
+  DEBIAN_FRONTEND=noninteractive sudo apt install -y build-essential zsh fzf
   log success "All packages are installed."
 }
 

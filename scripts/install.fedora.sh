@@ -15,7 +15,7 @@ function install_packages() {
   echo
   log info "Installing packages..."
   sudo dnf group install -y c-development development-tools
-  sudo dnf install -y zsh
+  sudo dnf install -y zsh fzf
   log success "All packages are installed."
 }
 

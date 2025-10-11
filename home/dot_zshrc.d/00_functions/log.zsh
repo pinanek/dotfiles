@@ -24,7 +24,7 @@ function log() {
   local color_code="\033[0;3${log_color}m"
   local no_color='\033[0m'
 
-  local uppercase_level="$(printf '%-7s' $level | tr [:lower:] [:upper:])"
+  local uppercase_level="$(printf '%-7s' "$level" | tr '[:lower:]' '[:upper:]')"
   local formatted_message="$(date +%H:%M:%S) ${color_code}${uppercase_level}${no_color} $title $*"
 
   if [[ "$std" == "&2" ]]; then
