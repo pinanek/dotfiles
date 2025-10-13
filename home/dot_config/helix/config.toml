@@ -8,6 +8,7 @@ undercurl = true
 end-of-line-diagnostics = "hint"
 color-modes = true
 true-color = true
+rainbow-brackets = true
 
 [editor.cursor-shape]
 insert = "bar"
