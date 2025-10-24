@@ -27,4 +27,4 @@ Automatically installs and configures dotfiles based on:
 
 - Hostname:
   - `PinaMac`: MacOS
-- Fallback by OS detection: `ubuntu`, `fedora`.
+- Fallback by OS detection: `ubuntu`, `debian`, `fedora`.

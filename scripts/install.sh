@@ -3,7 +3,7 @@
 set -eufo pipefail
 
 available_hosts=('PinaMac')
-available_oses=('ubuntu' 'fedora')
+available_oses=('ubuntu' 'debian' 'fedora')
 
 function log() {
   local level="$1"
