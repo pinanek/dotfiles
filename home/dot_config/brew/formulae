@@ -1,5 +1,4 @@
 brew "autossh"
-brew "bash"
 brew "bat"
 brew "eza"
 brew "fd"

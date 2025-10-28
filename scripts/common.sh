@@ -10,7 +10,7 @@ function prepare_env() {
     brew_bin_path="/home/linuxbrew/.linuxbrew/bin"
   fi
 
-  if [[ -n "$brew_bin_path" && -d "$brew_bin_path" && ":$PATH:" != *":$brew_bin_path:"* ]]; then
+  if [[ ":$PATH:" != *":$brew_bin_path:"* ]]; then
     export PATH="$brew_bin_path:$PATH"
   fi
 }
