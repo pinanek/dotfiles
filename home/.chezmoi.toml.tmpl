@@ -1,4 +1,4 @@
-{{- $machines := list "PinaMac" "ubuntu" "debian" "fedora" -}}
+{{- $machines := list "pinamac" "ubuntu" "debian" -}}
 {{- $machine := promptStringOnce . "machine" "machine" "unknown" -}}
 
 {{- if not (has $machine $machines) -}}

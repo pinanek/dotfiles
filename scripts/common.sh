@@ -1,15 +1,40 @@
-function upgrade_system() {
-  echo
-  log info "Upgrading the system..."
-  DEBIAN_FRONTEND=noninteractive sudo apt update && sudo apt upgrade -y
-  log success "The system is upgraded."
+#/usr/bin/env bash
+
+set -euo pipefail
+
+function prepare_env() {
+  brew_bin_path=""
+  if [[ "$os" == "Darwin" ]]; then
+    brew_bin_path="/opt/homebrew/bin"
+  elif [[ "$os" == "Linux" ]]; then
+    brew_bin_path="/home/linuxbrew/.linuxbrew/bin"
+  fi
+
+  if [[ -n "$brew_bin_path" && -d "$brew_bin_path" && ":$PATH:" != *":$brew_bin_path:"* ]]; then
+    export PATH="$brew_bin_path:$PATH"
+  fi
 }
 
-function install_packages() {
+function install_brew() {
   echo
-  log info "Installing packages..."
-  DEBIAN_FRONTEND=noninteractive sudo apt install -y build-essential zsh fzf
-  log success "All packages are installed."
+  log info 'Installing brew...'
+
+  if [ ! -f "$brew_bin_path/brew" ]; then
+    sudo echo -n
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    log success 'brew is installed.'
+  else
+    log info 'brew is already installed.'
+  fi
+
+  log info 'Installing brew packages from Brewfiles...'
+  for brew_file in "$XDG_CONFIG_HOME"/brew/*; do
+    if [[ -f "$brew_file" ]]; then
+      log info "\tInstalling from $(basename "$brew_file")"
+      brew bundle install --file="$brew_file"
+    fi
+  done
+  log success 'All brew packages are installed.'
 }
 
 function install_mise() {
@@ -18,42 +43,21 @@ function install_mise() {
   if ! command -v mise &>/dev/null; then
     curl -s https://mise.run | sh >/dev/null
   fi
-  log success '`mise` is installed.' echo
+  log success 'mise is installed.' echo
 
   echo
-  log info 'Installing `mise` packages...'
+  log info 'Installing mise packages...'
   mise install -y
   mise prune -y
-  log success 'All `mise` packages are installed.'
+  log success 'All mise packages are installed.'
 }
 
 function install_rust() {
   echo
-  log info 'Installing `rust` using `rustup`...'
+  log info 'Installing rust using rustup...'
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   source $HOME/.zshenv
-  log success '`rust` is installed!'
-
-  log info 'Installing `cargo` packages...'
-
-  log debug 'Installing `cargo-binstall`...'
-  curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-  log debug '`cargo-binstall` is installed.'
-
-  cargo binstall --no-confirm bat \
-    cargo-update \
-    eza \
-    fd-find \
-    gitui \
-    macchina \
-    ouch \
-    resvg \
-    ripgrep \
-    scooter \
-    shpool \
-    vivid \
-    yazi-fm
-  log success 'All `cargo` packages all installed.'
+  log success 'rust is installed!'
 }
 
 function build_helix() {
@@ -70,7 +74,7 @@ function build_bat_cache() {
 
 function setup_shpool() {
   echo
-  log info 'Setting up `shpool`...'
+  log info 'Setting up shpool...'
 
   curl -fLo "${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user/shpool.service" --create-dirs https://raw.githubusercontent.com/shell-pool/shpool/master/systemd/shpool.service
   sed -i "s|/usr|$HOME/.cargo|" "${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user/shpool.service"
@@ -79,7 +83,7 @@ function setup_shpool() {
   systemctl --user start shpool
   loginctl enable-linger
 
-  log success '`shpool` is set up.'
+  log success 'shpool is set up.'
 }
 
 function change_default_shell() {
@@ -90,23 +94,7 @@ function change_default_shell() {
   if [[ "$SHELL" == "$shell_path" ]]; then
     log info "The default shell is already changed to \"$shell_path\"."
   else
-    chsh -s "$shell_path"
+    sudo chsh -s $shell_path $USER
     log success "The default shell is changed to \"$shell_path\"."
   fi
 }
-
-function main() {
-  upgrade_system
-  install_packages
-
-  install_mise
-  install_rust
-
-  build_helix
-  build_bat_cache
-
-  setup_shpool
-  change_default_shell
-}
-
-main

@@ -1,8 +1,8 @@
-{{ if ne .machine "PinaMac" }}
+{{ if ne .machine "pinamac" }}
 .config/ghostty
-.Brewfile
+.config/brew/casks
 {{ end }}
 
-{{ if eq .machine "PinaMac" }}
+{{ if eq .machine "pinamac" }}
 .config/shpool
 {{ end }}

@@ -3,7 +3,7 @@
 My dotfiles for MacOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
 
 <p align="center">
-  <img src="assets/preview.png" alt="An image of helix and tmux" />
+  <img src="assets/preview.png" alt="An image of helix" />
 </p>
 
 ## Overview
@@ -15,7 +15,7 @@ My dotfiles for MacOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
 - Shell: [Zsh](https://www.zsh.org/).
 - Prompt: [Pure](https://github.com/sindresorhus/pure)
 - Dev env: [Mise](https://mise.jdx.dev/).
-- Others: [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`fzf`](https://github.com/junegunn/fzf) [`gitui`](https://github.com/gitui-org/gitui), [`vivid`](https://github.com/sharkdp/vivid), [`yazi`](https://github.com/sxyazi/yazi), etc.
+- Others: [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`fzf`](https://github.com/junegunn/fzf) [`lazygit`](https://github.com/jesseduffield/lazygit), [`vivid`](https://github.com/sharkdp/vivid), [`yazi`](https://github.com/sxyazi/yazi), etc.
 
 ## Installation
 
@@ -26,5 +26,5 @@ curl -fsSL https://raw.githubusercontent.com/pinanek/dotfiles/refs/heads/main/sc
 Automatically installs and configures dotfiles based on:
 
 - Hostname:
-  - `PinaMac`: MacOS
-- Fallback by OS detection: `ubuntu`, `debian`, `fedora`.
+  - `pinamac`: MacOS
+- Fallback by OS detection: `ubuntu`, `debian`.

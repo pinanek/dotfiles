@@ -1,9 +1,11 @@
 #/usr/bin/env bash
 
-set -eufo pipefail
+set -euo pipefail
 
-available_hosts=('PinaMac')
+available_hosts=('pinamac')
 available_oses=('ubuntu' 'debian' 'fedora')
+
+os="$(uname -s)"
 
 function log() {
   local level="$1"
@@ -55,58 +57,53 @@ function prepare_env() {
 
 function install_chezmoi() {
   echo
-  log info 'Installing `chezmoi`...'
+  log info 'Installing chezmoi...'
 
   if command -v chezmoi >/dev/null 2>&1; then
-    log info "\`chezmoi\` is already in $PATH."
+    log info 'chezmoi is already in $PATH.'
     return
   fi
 
   sh -c "$(curl -fsLS get.chezmoi.io/lb)"
 
-  log success '`chezmoi` is installed.'
+  log success 'chezmoi is installed.'
 }
 
 function detect_machine() {
   local machine=""
 
-  local hostname=$(hostname)
+  local hostname=$(hostname | tr '[:upper:]' '[:lower:]')
   if [[ " ${available_hosts[*]} " =~ " $hostname " ]]; then
     machine="$hostname"
   else
-    local os_type=$(uname -s)
-    if [[ "$os_type" == 'Linux' ]] && [[ -f /etc/os-release ]]; then
+    if [[ "$os" == 'Linux' ]] && [[ -f /etc/os-release ]]; then
       source /etc/os-release
-      machine="${ID,,}"
-    elif [[ "$os_type" == 'Darwin' ]]; then
+      machine="$ID"
+    elif [[ "$os" == 'Darwin' ]]; then
       machine='macos'
     fi
   fi
 
-  # Validate machine
   if [[ ! " ${available_hosts[*]} ${available_oses[*]} " =~ " $machine " ]]; then
     machine="unknown"
   fi
 
-  echo "$machine"
+  echo "$machine" | tr '[:upper:]' '[:lower:]'
 }
 function main() {
   log debug 'Detecting the current machine...'
-  local machine=$(detect_machine)
-  if [[ "$machine" == "Unknown" ]]; then
-    log error "Unsupported machine. Supported hosts: ${available_hosts[*]} and OSes: ${available_oses[*]}"
-    exit 1
-  fi
+  machine=$(detect_machine)
   log info "Machine: \"$machine\""
 
   prepare_env
   install_chezmoi
 
-  dotfiles_repo='pinanek/dotfiles'
+  local dotfiles_repo='pinanek/dotfiles'
   dotfiles_dir="$XDG_DATA_HOME/chezmoi"
 
-  chezmoi init $dotfiles_repo --promptString machine=$machine --apply
-  source "$dotfiles_dir/scripts/install.$machine.sh"
+  # chezmoi init $dotfiles_repo --promptString machine=$machine --apply
+  source "$dotfiles_dir/scripts/common.sh"
+  source "$dotfiles_dir/scripts/machines/$machine.sh"
 }
 
 main
