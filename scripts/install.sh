@@ -101,7 +101,7 @@ function main() {
   local dotfiles_repo='pinanek/dotfiles'
   dotfiles_dir="$XDG_DATA_HOME/chezmoi"
 
-  # chezmoi init $dotfiles_repo --promptString machine=$machine --apply
+  chezmoi init $dotfiles_repo --promptString machine=$machine --apply
   source "$dotfiles_dir/scripts/common.sh"
   source "$dotfiles_dir/scripts/machines/$machine.sh"
 }
