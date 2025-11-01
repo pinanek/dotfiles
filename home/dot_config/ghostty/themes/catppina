@@ -20,3 +20,4 @@ cursor-color = ffcdc7
 cursor-text = 101011
 selection-background = 313133
 selection-foreground = c3c3c4
+split-divider-color = 212122

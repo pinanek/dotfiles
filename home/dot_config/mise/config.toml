@@ -1,5 +1,5 @@
 [tools]
-"pipx:basedpyright" = "latest"
+"cargo:just-lsp" = "latest"
 "npm:@microsoft/compose-language-service" = "latest"
 "npm:bash-language-server" = "latest"
 "npm:dockerfile-language-server-nodejs" = "latest"
@@ -7,6 +7,7 @@
 "npm:prettier" = "latest"
 "npm:vscode-langservers-extracted" = "latest"
 "npm:yaml-language-server" = "latest"
+"pipx:basedpyright" = "latest"
 
 marksman = "latest"
 shfmt = "latest"
@@ -15,9 +16,11 @@ uv = "latest"
 ruff = "latest"
 npm = "latest"
 pnpm = "latest"
+cargo-binstall = "latest"
 
 node = "22"
 python = "3.13"
+rust = "1.91"
 
 [settings]
 experimental = true

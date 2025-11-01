@@ -45,10 +45,6 @@ function main() {
 
   install_brew
   install_mise
-  install_rust
-
-  build_helix
-  build_bat_cache
 
   configure_macos_defaults
 }

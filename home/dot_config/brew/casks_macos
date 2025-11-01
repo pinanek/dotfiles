@@ -4,6 +4,7 @@ cask "clop"
 cask "crystalfetch"
 cask "cyberduck"
 cask "discord"
+cask "figma"
 cask "firefox@developer-edition"
 cask "font-symbols-only-nerd-font"
 cask "ghostty"
@@ -23,13 +24,11 @@ cask "tor-browser"
 cask "transmission"
 cask "utm"
 
-mas "Bear", id: 1091189122
 mas "Camera Preview", id: 1632827132
 mas "Color Picker", id: 1545870783
 mas "Dropover", id: 1355679052
 mas "Hyperduck", id: 6444667067
 mas "Passepartout", id: 1433648537
-mas "Refined GitHub", id: 1519867270
 mas "Speediness", id: 1596706466
 mas "Square Sketch", id: 6477753172
 mas "Strongbox", id: 1481853033

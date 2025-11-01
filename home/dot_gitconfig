@@ -1,0 +1,26 @@
+[core]
+	editor = hx
+	pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+	line-numbers = true
+    side-by-side = true
+	features = catppina
+
+[merge]
+    conflictStyle = zdiff3
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[include]
+	path = .gitconfig.local
+	path = .config/delta/catppina.gitconfig
+

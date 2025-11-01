@@ -1,0 +1,157 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "padding": {
+      "top": 0,
+      "left": 0,
+      "right": 4
+    }
+  },
+  "display": {
+    "separator": "",
+    "key": {
+      "width": 11,
+      "type": "string",
+      "paddingLeft": 0
+    }
+  },
+  "modules": [
+    {
+      "type": "title",
+      "format": "{#93}{user-name}{at-symbol-colored}{host-name}"
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
+    },
+    {
+      "type": "shell",
+      "key": "shell",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "editor",
+      "key": "editor",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "terminal",
+      "key": "term",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "terminalfont",
+      "key": "term-font",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
+    },
+    {
+      "type": "os",
+      "key": "os",
+      "keyColor": "green",
+      "format": "{name} {codename} {version}",
+      "outputColor": "blue"
+    },
+    {
+      "type": "kernel",
+      "key": "kernel",
+      "keyColor": "green",
+      "format": "{sysname} {release} {arch}",
+      "outputColor": "blue"
+    },
+    {
+      "type": "packages",
+      "key": "packages",
+      "keyColor": "green",
+      "outputColor": "blue",
+      "disabled": ["winget"],
+      "combined": false
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
+    },
+    {
+      "type": "host",
+      "key": "machine",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "uptime",
+      "key": "uptime",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "cpu",
+      "key": "cpu",
+      "format": "{name}{?freq-base} - {freq-base}{?}{?freq-max} - {freq-max}{?} - {?cores-physical}{cores-physical} cores{?}",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "gpu",
+      "key": "gpu",
+      "detectionMethod": "auto",
+      "format": "{name}{?frequency} - {frequency}{?}{?core-count} - {core-count} cores{?}{?shared-total} - {shared-total}{?}",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "memory",
+      "key": "memory",
+      "format": "{total}",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "disk",
+      "key": "disk",
+      "format": "{size-total} - {filesystem} {?is-external}(external){?}",
+      "keyColor": "green",
+      "outputColor": "blue",
+      "showRegular": true,
+      "showExternal": true,
+      "showHidden": false,
+      "showSubvolumes": false,
+      "showReadOnly": true,
+      "showUnknown": false,
+      "folders": "",
+      "hideFolders": "",
+      "hideFS": "",
+      "useAvailable": false,
+      "percent": {
+        "green": 50,
+        "yellow": 80,
+        "type": 0
+      }
+    },
+    {
+      "type": "display",
+      "key": "display",
+      "compactType": "none",
+      "preciseRefreshRate": false,
+      "order": "desc",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    {
+      "type": "player",
+      "key": "player",
+      "keyColor": "green",
+      "outputColor": "blue"
+    },
+    "break"
+  ]
+}

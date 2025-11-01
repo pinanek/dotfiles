@@ -52,26 +52,6 @@ function install_mise() {
   log success 'All mise packages are installed.'
 }
 
-function install_rust() {
-  echo
-  log info 'Installing rust using rustup...'
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  source $HOME/.zshenv
-  log success 'rust is installed!'
-}
-
-function build_helix() {
-  echo
-  source $HOME/.zshrc.d/00_functions/build-helix.zsh
-  build-helix
-}
-
-function build_bat_cache() {
-  echo
-  source $HOME/.zshrc.d/00_functions/build-bat-cache.zsh
-  build-bat-cache
-}
-
 function setup_shpool() {
   echo
   log info 'Setting up shpool...'
