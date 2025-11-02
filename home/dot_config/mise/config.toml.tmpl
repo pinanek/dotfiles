@@ -17,6 +17,9 @@ ruff = "latest"
 npm = "latest"
 pnpm = "latest"
 cargo-binstall = "latest"
+{{ if eq .chezmoi.os "linux" }}
+"cargo:shpool" = "latest"
+{{ end }}
 
 node = "22"
 python = "3.13"
