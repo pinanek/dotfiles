@@ -37,6 +37,6 @@ macos-option-as-alt = true
 # $TERM
 term = xterm-ghostty
 
-shell-integration-features = sudo
+shell-integration-features = ssh-terminfo,sudo
 
 copy-on-select = false
