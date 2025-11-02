@@ -3,7 +3,7 @@
 set -euo pipefail
 
 available_hosts=('pinamac')
-available_oses=('ubuntu' 'debian' 'fedora')
+available_oses=('ubuntu' 'debian')
 
 os="$(uname -s)"
 
