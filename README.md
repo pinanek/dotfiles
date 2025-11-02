@@ -13,9 +13,9 @@ My dotfiles for MacOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
 - Terminal: [Ghostty](https://ghostty.org).
 - Editor: [Helix](https://helix-editor.com/).
 - Shell: [Zsh](https://www.zsh.org/).
-- Prompt: [Pure](https://github.com/sindresorhus/pure)
+- Prompt: [Pure](https://github.com/sindresorhus/pure).
 - Dev env: [Mise](https://mise.jdx.dev/).
-- Others: [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`fzf`](https://github.com/junegunn/fzf) [`lazygit`](https://github.com/jesseduffield/lazygit), [`vivid`](https://github.com/sharkdp/vivid), [`yazi`](https://github.com/sxyazi/yazi), etc.
+- Others: [`bat`](https://github.com/sharkdp/bat), [`btop`](https://github.com/aristocratos/btop), [`delta`](https://github.com/dandavison/delta), [`eza`](https://github.com/eza-community/eza), [`fzf`](https://github.com/junegunn/fzf) [`lazygit`](https://github.com/jesseduffield/lazygit), [`vivid`](https://github.com/sharkdp/vivid), [`yazi`](https://github.com/sxyazi/yazi), etc.
 
 ## Installation
 
