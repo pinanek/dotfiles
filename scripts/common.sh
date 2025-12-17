@@ -28,6 +28,7 @@ function install_brew() {
   fi
 
   log info 'Installing brew packages from Brewfiles...'
+  eval $("$brew_bin_path/brew" shellenv)
   for brew_file in "$XDG_CONFIG_HOME"/brew/*; do
     if [[ -f "$brew_file" ]]; then
       log info "\tInstalling from $(basename "$brew_file")"
