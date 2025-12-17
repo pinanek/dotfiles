@@ -18,7 +18,6 @@ function main() {
   install_brew
   install_mise
 
-  setup_shpool
   change_default_shell
 }
 

@@ -52,20 +52,6 @@ function install_mise() {
   log success 'All mise packages are installed.'
 }
 
-function setup_shpool() {
-  echo
-  log info 'Setting up shpool...'
-
-  curl -fLo "${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user/shpool.service" --create-dirs https://raw.githubusercontent.com/shell-pool/shpool/master/systemd/shpool.service
-  sed -i "s|/usr|$XDG_DATA_HOME/mise/installs/cargo-shpool/latest|" "${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user/shpool.service"
-  curl -fLo "${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user/shpool.socket" --create-dirs https://raw.githubusercontent.com/shell-pool/shpool/master/systemd/shpool.socket
-  systemctl --user enable shpool
-  systemctl --user start shpool
-  loginctl enable-linger
-
-  log success 'shpool is set up.'
-}
-
 function change_default_shell() {
   shell_path="$(which zsh)"
 
