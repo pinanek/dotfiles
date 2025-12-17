@@ -9,9 +9,9 @@ My dotfiles for MacOS and Linux, managed with [chezmoi](https://www.chezmoi.io).
 ## Overview
 
 - Theme: [Catppina](https://github.com/pinanek/catppina) - My custom theme based on [Catpppuccin](https://catppuccin.com/).
-- Font: [Cartograph CF](https://connary.com/fonts/cartograph).
+- Font: [JetBrains Mono](https://www.jetbrains.com/lp/mono).
 - Terminal: [Ghostty](https://ghostty.org).
-- Editor: [Helix](https://helix-editor.com/).
+- Editor: [Helix](https://helix-editor.com).
 - Shell: [Zsh](https://www.zsh.org/).
 - Prompt: [Pure](https://github.com/sindresorhus/pure).
 - Dev env: [Mise](https://mise.jdx.dev/).
