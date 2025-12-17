@@ -3,7 +3,6 @@ theme = catppina
 # ── Font ──────────────────────────────────────────────────────────────
 
 font-family = JetBrains Mono
-window-title-font-family = JetBrains Mono
 
 font-size = 15
 font-thicken = true
@@ -17,6 +16,8 @@ font-style-bold-italic = Bold Italic
 font-synthetic-style = false
 
 # ── Window ────────────────────────────────────────────────────────────
+
+window-title-font-family = JetBrains Mono
 
 maximize = true
 

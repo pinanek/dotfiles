@@ -1,3 +1,4 @@
+cask "antinote"
 cask "blackhole-2ch"
 cask "beeper"
 cask "cleanupbuddy"
