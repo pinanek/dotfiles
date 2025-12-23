@@ -1,5 +1,6 @@
 tap "gromgit/brewtils"
 tap "neurosnap/tap"
+tap "ksdme/tap"
 
 brew "asciinema"
 brew "autossh"
@@ -29,3 +30,4 @@ brew "vivid"
 brew "yazi"
 brew "gromgit/brewtils/taproom"
 brew "neurosnap/tap/zmx"
+brew "ksdme/tap/ut"

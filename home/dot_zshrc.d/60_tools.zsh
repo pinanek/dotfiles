@@ -13,3 +13,5 @@ zstyle ":fzf-tab:*" use-fzf-default-opts yes
 source $HOME/.zshrc.d/themes/fzf.zsh
 FZF_ALT_C_COMMAND= FZF_CTRL_T_COMMAND= eval "$(fzf --zsh)"
 
+# ut
+eval "$(ut completions zsh)"

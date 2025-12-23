@@ -77,21 +77,17 @@ A-k = [
 
 [keys.normal.space]
 e = "file_picker"
-E = [
-  ":sh rm -f /tmp/unique-file-h21a434",
-  ":insert-output yazi '%{buffer_name}' --chooser-file=/tmp/unique-file-h21a434",
-  ":insert-output echo \"x1b[?1049h\" > /dev/tty",
-  ":open %sh{cat /tmp/unique-file-h21a434}",
-  ":redraw",
-  ":set mouse false",
-  ":set mouse true",
-]
 f = ":format"
-F = "no_op"
 i = ":toggle lsp.display-inlay-hints"
-"?" = [
-  ":write-all",
-  ":insert-output scooter >/dev/tty",
-  ":redraw",
-  ":reload-all",
-]
+F = "no_op"
+E = "no_op"
+
+[keys.select."+"]
+c = ":pipe ut case camel -"
+C = ":pipe ut case constant -"
+l = ":pipe ut case lower -"
+u = ":pipe ut case upper -"
+h = ":pipe ut case header -"
+s = ":pipe ut case snake -"
+S = ":pipe ut case sentence -"
+t = ":pipe ut case title -"
