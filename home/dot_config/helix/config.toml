@@ -49,15 +49,6 @@ nbsp = "all"
 nnbsp = "all"
 newline = "none"
 
-[editor.auto-pairs]
-'(' = ')'
-'{' = '}'
-'[' = ']'
-"'" = "'"
-'"' = '"'
-'`' = '`'
-'<' = '>'
-
 [editor.whitespace.characters]
 space = "·"
 nbsp = "⍽"
@@ -65,6 +56,15 @@ nnbsp = "␣"
 tab = "→"
 newline = "⏎"
 tabpad = "·"
+
+[editor.auto-pairs]
+'(' = ")"
+'{' = "}"
+'[' = "]"
+"'" = "'"
+'"' = '"'
+'`' = "`"
+'<' = ">"
 
 [keys.normal]
 A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]

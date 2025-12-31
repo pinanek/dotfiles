@@ -32,8 +32,8 @@ formatter = { command = "prettier", args = ["--parser", "markdown"] }
 [[language]]
 name = "toml"
 roots = ["."]
-language-servers = ["taplo"]
-formatter = { command = "taplo", args = ["format", "-"] }
+language-servers = ["tombi"]
+formatter = { command = "tombi", args = ["format", "-"] }
 
 [[language]]
 name = "yaml"
@@ -59,7 +59,3 @@ args = ["server"]
 command = "fish-lsp"
 args = ["start"]
 environment = { "fish_lsp_show_client_popups" = "false" }
-
-# TOML
-[language-server.taplo.config]
-root_dir = [".git", "*.toml"]
