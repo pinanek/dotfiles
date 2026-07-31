@@ -27,6 +27,7 @@
 "brew-cask:telegram" = "latest"
 "brew-cask:tor-browser" = "latest"
 "brew-cask:transmission" = "latest"
+"brew-cask:zed@preview" = "latest"
 
 # Mac App Store
 "mas:1632827132" = "latest"  # Camera Preview
