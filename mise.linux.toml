@@ -1,0 +1,6 @@
+[bootstrap.packages]
+"apt:build-essential" = "latest"
+"apt:pkg-config" = "latest"
+
+"dnf:gcc" = "latest"
+"dnf:pkgconf-pkg-config" = "latest"

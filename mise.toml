@@ -1,0 +1,174 @@
+[settings]
+experimental = true
+
+python.uv_venv_auto = "source"
+idiomatic_version_file_enable_tools = ["python"]
+
+dotfiles.root = "~/.dotfiles/home"
+dotfiles.default_mode = "copy"
+
+[env]
+HELIX_RUNTIME = "{{ env.HOME }}/.local/src/helix/runtime"
+
+[task_config]
+includes = [
+  "tasks/helix.toml",
+  "tasks/themes.toml",
+]
+
+[tools]
+# Language runtimes
+node = "24"
+python = "3.14"
+rust = { version = "latest", components = "rust-analyzer" }
+zig = "0.16"
+
+# Package managers / build tools
+aube = "latest"
+cargo-binstall = "latest"
+just = "latest"
+npm = "latest"
+pnpm = "latest"
+uv = "latest"
+
+# Formatters / linters
+dprint = "latest"
+ruff = "latest"
+shfmt = "latest"
+stylua = "latest"
+tombi = "latest"
+"npm:prettier" = "latest"
+
+# Language servers
+"cargo:https://github.com/helix-editor/helix" = {
+  version = "latest",
+  crate = "helix-term",
+  locked = true,
+  install_env = {
+    CARGO_BUILD_RUSTFLAGS = "-C target-cpu=native",
+    CARGO_PROFILE_RELEASE_LTO = "fat",
+    CARGO_PROFILE_RELEASE_CODEGEN_UNITS = "1",
+    CARGO_PROFILE_RELEASE_STRIP = "true",
+    CARGO_PROFILE_RELEASE_OPT_LEVEL = "3",
+  },
+}
+
+lua-language-server = "latest"
+marksman = "latest"
+ty = "latest"
+zls = "0.16"
+
+"cargo:just-lsp" = "latest"
+"npm:@microsoft/compose-language-service" = "latest"
+"npm:bash-language-server" = "latest"
+"npm:dockerfile-language-server-nodejs" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+"npm:yaml-language-server" = "latest"
+
+[bootstrap.repos]
+"~/.local/src/helix" = {
+  url = "https://github.com/helix-editor/helix.git",
+  ref = "master"
+}
+"~/.local/src/catppina" = {
+  url = "https://github.com/pinanek/catppina.git",
+  ref = "main"
+}
+
+[bootstrap.packages]
+"brew:asciinema" = "latest"
+"brew:autossh" = "latest"
+"brew:bat" = "latest"
+"brew:btop" = "latest"
+"brew:cbonsai" = "latest"
+"brew:croc" = "latest"
+"brew:eza" = "latest"
+"brew:fastfetch" = "latest"
+"brew:fd" = "latest"
+"brew:fzf" = "latest"
+"brew:ffmpeg" = "latest"
+"brew:gh" = "latest"
+"brew:git" = "latest"
+"brew:git-delta" = "latest"
+"brew:lazydocker" = "latest"
+"brew:lazygit" = "latest"
+"brew:lazysql" = "latest"
+"brew:miniserve" = "latest"
+"brew:nmap" = "latest"
+"brew:ouch" = "latest"
+"brew:posting" = "latest"
+"brew:ripgrep" = "latest"
+"brew:rtk" = "latest"
+"brew:scooter" = "latest"
+"brew:tlrc" = "latest"
+"brew:vivid" = "latest"
+"brew:yazi" = "latest"
+"brew:zsh" = "latest"
+
+[dotfiles]
+"~/.config/mise/config.toml" = "~/.dotfiles/mise.toml"
+"~/.config/mise/config.macos.toml" = "~/.dotfiles/mise.macos.toml"
+"~/.config/mise/config.linux.toml" = "~/.dotfiles/mise.linux.toml"
+"~/.config/mise/miserc.toml" = "~/.dotfiles/.miserc.toml"
+
+"~/.config/mise/tasks/themes.toml" = "~/.dotfiles/tasks/themes.toml"
+
+"~/.gitconfig" = {}
+"~/.hushlogin" = {}
+"~/.zshrc" = {}
+
+"~/.zshrc.d/10_core/10_env.zsh" = {}
+"~/.zshrc.d/10_core/20_path.zsh" = {}
+"~/.zshrc.d/10_core/30_options.zsh" = {}
+"~/.zshrc.d/20_completion/10_styles.zsh" = {}
+"~/.zshrc.d/30_plugins/10_antidote.zsh" = {}
+"~/.zshrc.d/30_plugins/plugins.txt" = {}
+"~/.zshrc.d/40_ui/10_prompt.zsh" = {}
+"~/.zshrc.d/40_ui/20_zsh_syntax_highlighting.zsh" = {}
+"~/.zshrc.d/50_tools/10_mise.zsh" = {}
+"~/.zshrc.d/50_tools/20_bat.zsh" = {}
+"~/.zshrc.d/50_tools/30_lazygit.zsh" = {}
+"~/.zshrc.d/50_tools/40_fzf.zsh" = {}
+"~/.zshrc.d/50_tools/50_sessions.zsh" = {}
+"~/.zshrc.d/50_tools/fzf_catppina.sh" = {}
+"~/.zshrc.d/60_shell/10_abbreviations.zsh" = {}
+
+"~/.config/bat/bat.conf" = {}
+"~/.config/bat/themes/catppina.tmTheme" = {}
+
+"~/.config/btop/btop.conf" = {}
+"~/.config/btop/themes/catppina.theme" = {}
+
+"~/.config/delta/catppina.gitconfig" = {}
+
+"~/.config/fastfetch/config.jsonc" = {}
+
+"~/.config/helix/config.toml" = {}
+"~/.config/helix/languages.toml" = {}
+"~/.config/helix/themes/catppina.toml" = {}
+
+"~/.config/lazygit/config.yml" = {}
+"~/.config/lazygit/theme.yml" = {}
+
+"~/.config/nvim/init.lua" = {}
+"~/.config/nvim/stylua.toml" = {}
+"~/.config/nvim/after/lsp/astro.lua" = {}
+"~/.config/nvim/after/lsp/lua_ls.lua" = {}
+"~/.config/nvim/after/lsp/vtsls.lua" = {}
+"~/.config/nvim/lua/pinanek/autocmds.lua" = {}
+"~/.config/nvim/lua/pinanek/color_scheme.lua" = {}
+"~/.config/nvim/lua/pinanek/filetypes.lua" = {}
+"~/.config/nvim/lua/pinanek/init.lua" = {}
+"~/.config/nvim/lua/pinanek/keybindings.lua" = {}
+"~/.config/nvim/lua/pinanek/lsp.lua" = {}
+"~/.config/nvim/lua/pinanek/options.lua" = {}
+"~/.config/nvim/lua/pinanek/plugin_manager.lua" = {}
+"~/.config/nvim/queries/gotmpl/injections.scm" = {}
+
+"~/.config/vivid/catppina.yaml" = {}
+
+"~/.config/yazi/theme.toml" = {}
+"~/.config/yazi/yazi.toml" = {}
+
+"~/.config/zed/settings.json" = {}
+"~/.config/zed/themes/catppina.json" = {}

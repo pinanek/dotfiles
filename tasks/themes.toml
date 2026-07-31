@@ -1,0 +1,32 @@
+["themes:sync"]
+description = "Copy Catppina themes into the dotfiles repository"
+run = '''
+set -eu
+
+source_dir="$HOME/.local/src/catppina/dist"
+target_dir="$HOME/.dotfiles/home"
+
+copy_theme() {
+  source="$source_dir/$1"
+  target="$target_dir/$2"
+
+  if [ ! -f "$source" ]; then
+    printf 'themes:sync: missing source: %s\n' "$source" >&2
+    exit 1
+  fi
+
+  mkdir -p "$(dirname "$target")"
+  install -m 0644 "$source" "$target"
+}
+
+copy_theme bat/catppina.tmTheme .config/bat/themes/catppina.tmTheme
+copy_theme btop/catppina.theme .config/btop/themes/catppina.theme
+copy_theme delta/catppina.gitconfig .config/delta/catppina.gitconfig
+copy_theme fzf/catppina.sh .zshrc.d/50_tools/fzf_catppina.sh
+copy_theme ghostty/catppina.conf .config/ghostty/themes/catppina
+copy_theme helix/catppina.toml .config/helix/themes/catppina.toml
+copy_theme lazygit/catppina.yml .config/lazygit/theme.yml
+copy_theme yazi/catppina.toml .config/yazi/theme.toml
+copy_theme zsh-syntax-highlighting/catppina.zsh .zshrc.d/40_ui/20_zsh_syntax_highlighting.zsh
+copy_theme zed/catppina.json zed/themes/catppina.json
+'''
