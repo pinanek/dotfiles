@@ -19,6 +19,7 @@ includes = [
 [tools]
 # Language runtimes
 node = "24"
+deno = "2"
 python = "3.14"
 rust = { version = "latest", components = "rust-analyzer" }
 zig = "0.16"
