@@ -19,7 +19,7 @@
   },
   "excludes": [
     "**/*-lock.json",
-    "home/.zshrc.d/40_ui/20_zsh_syntax_highlighting.zsh"
+    "home/.zshrc.d/40_ui/20_zsh_syntax_highlighting*.zsh"
   ],
   "plugins": [
     "https://plugins.dprint.dev/json-0.23.0.wasm",

@@ -19,14 +19,33 @@ copy_theme() {
   install -m 0644 "$source" "$target"
 }
 
-copy_theme bat/catppina.tmTheme .config/bat/themes/catppina.tmTheme
-copy_theme btop/catppina.theme .config/btop/themes/catppina.theme
-copy_theme delta/catppina.gitconfig .config/delta/catppina.gitconfig
-copy_theme fzf/catppina.sh .zshrc.d/50_tools/fzf_catppina.sh
-copy_theme ghostty/catppina.conf .config/ghostty/themes/catppina
-copy_theme helix/catppina.toml .config/helix/themes/catppina.toml
-copy_theme lazygit/catppina.yml .config/lazygit/theme.yml
-copy_theme yazi/catppina.toml .config/yazi/theme.toml
-copy_theme zsh-syntax-highlighting/catppina.zsh .zshrc.d/40_ui/20_zsh_syntax_highlighting.zsh
-copy_theme zed/catppina.json zed/themes/catppina.json
+copy_theme bat/catppina_light.tmTheme .config/bat/themes/catppina_light.tmTheme
+copy_theme bat/catppina_dark.tmTheme .config/bat/themes/catppina_dark.tmTheme
+
+copy_theme btop/catppina_light.theme .config/btop/themes/catppina_light.theme
+copy_theme btop/catppina_dark.theme .config/btop/themes/catppina_dark.theme
+
+copy_theme delta/catppina_light.gitconfig .config/delta/catppina_light.gitconfig
+copy_theme delta/catppina_dark.gitconfig .config/delta/catppina_dark.gitconfig
+
+copy_theme fzf/catppina_light.sh .zshrc.d/50_tools/fzf_catppina_light.sh
+copy_theme fzf/catppina_dark.sh .zshrc.d/50_tools/fzf_catppina_dark.sh
+
+copy_theme ghostty/catppina_light.conf .config/ghostty/themes/catppina_light
+copy_theme ghostty/catppina_dark.conf .config/ghostty/themes/catppina_dark
+
+copy_theme helix/catppina_light.toml .config/helix/themes/catppina_light.toml
+copy_theme helix/catppina_dark.toml .config/helix/themes/catppina_dark.toml
+
+copy_theme lazygit/catppina_light.yml .config/lazygit/theme_light.yml
+copy_theme lazygit/catppina_dark.yml .config/lazygit/theme.yml
+
+copy_theme yazi/catppina_light.toml .config/yazi/theme_light.toml
+copy_theme yazi/catppina_dark.toml .config/yazi/theme_dark.toml
+
+# copy_theme zsh-syntax-highlighting/catppina_light.zsh .zshrc.d/40_ui/20_zsh_syntax_highlighting_light.zsh
+copy_theme zsh-syntax-highlighting/catppina_dark.zsh .zshrc.d/40_ui/20_zsh_syntax_highlighting_dark.zsh
+
+copy_theme zed/catppina_light.json .config/zed/themes/catppina_light.json
+copy_theme zed/catppina_dark.json .config/zed/themes/catppina_dark.json
 '''

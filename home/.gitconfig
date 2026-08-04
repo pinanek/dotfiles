@@ -22,5 +22,4 @@
 
 [include]
 	path = .gitconfig.local
-	path = .config/delta/catppina.gitconfig
-
+	path = .config/delta/catppina_dark.gitconfig

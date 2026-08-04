@@ -1,0 +1,134 @@
+colors:
+  # Original "catppuccin" theme
+  # https://github.com/catppuccin/catppuccin
+  rosewater: "c66a5e"
+  flamingo: "c85d61"
+  pink: "b84f83"
+  mauve: "647fc5"
+  red: "c94f55"
+  maroon: "bd6252"
+  peach: "bd6b32"
+  yellow: "8b6b22"
+  green: "398460"
+  teal: "287f76"
+  sky: "367fa3"
+  sapphire: "277c97"
+  blue: "347aa5"
+  lavender: "6579ad"
+
+  text: "303033"
+  subtext1: "49494d"
+  subtext0: "606064"
+  overlay2: "737378"
+  overlay1: "89898e"
+  overlay0: "9d9da2"
+  surface2: "d8d8da"
+  surface1: "e3e3e5"
+  surface0: "eeeeef"
+  base: "f7f7f8"
+  mantle: "f1f1f2"
+  crust: "e9e9eb"
+
+core:
+  normal_text: {}
+  regular_file: {}
+  reset_to_normal: {}
+
+  directory:
+    foreground: blue
+
+  symlink:
+    foreground: pink
+
+  multi_hard_link: {}
+
+  fifo:
+    foreground: crust
+    background: blue
+
+  socket:
+    foreground: crust
+    background: pink
+
+  door:
+    foreground: crust
+    background: pink
+
+  block_device:
+    foreground: sapphire
+    background: surface0
+
+  character_device:
+    foreground: pink
+    background: surface0
+
+  broken_symlink:
+    foreground: crust
+    background: red
+
+  missing_symlink_target:
+    foreground: crust
+    background: red
+
+  setuid: {}
+
+  setgid: {}
+
+  file_with_capability: {}
+
+  sticky_other_writable: {}
+
+  other_writable: {}
+
+  sticky: {}
+
+  executable_file:
+    foreground: red
+    font-style: bold
+
+text:
+  special:
+    foreground: base
+    background: yellow
+
+  todo:
+    font-style: bold
+
+  licenses:
+    foreground: overlay2
+
+  configuration:
+    foreground: yellow
+
+  other:
+    foreground: yellow
+
+markup:
+  foreground: yellow
+
+programming:
+  source:
+    foreground: green
+
+  tooling:
+    foreground: teal
+
+    continuous-integration:
+      foreground: green
+
+media:
+  foreground: flamingo
+
+office:
+  foreground: red
+
+archives:
+  foreground: sapphire
+  font-style: underline
+
+executable:
+  foreground: red
+  font-style: bold
+
+unimportant:
+  foreground: surface2

@@ -7,6 +7,6 @@ export XDG_BIN_HOME="${XDG_BIN_HOME:-$HOME/.local/bin}"
 export SHELL="${SHELL:-$(command -v zsh)}"
 export EDITOR="${EDITOR:-$(command -v hx)}"
 
-if command -v vivid >/dev/null 2>&1 && [[ -f "$XDG_CONFIG_HOME/vivid/catppina.yaml" ]]; then
-  export LS_COLORS="$(vivid generate "$XDG_CONFIG_HOME/vivid/catppina.yaml")"
+if command -v vivid >/dev/null 2>&1 && [[ -f "$XDG_CONFIG_HOME/vivid/catppina_dark.yaml" ]]; then
+  export LS_COLORS="$(vivid generate "$XDG_CONFIG_HOME/vivid/catppina_dark.yaml")"
 fi

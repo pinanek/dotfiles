@@ -125,31 +125,37 @@ zls = "0.16"
 "~/.zshrc.d/30_plugins/10_antidote.zsh" = {}
 "~/.zshrc.d/30_plugins/plugins.txt" = {}
 "~/.zshrc.d/40_ui/10_prompt.zsh" = {}
-"~/.zshrc.d/40_ui/20_zsh_syntax_highlighting.zsh" = {}
+"~/.zshrc.d/40_ui/20_zsh_syntax_highlighting_dark.zsh" = {}
 "~/.zshrc.d/50_tools/10_mise.zsh" = {}
 "~/.zshrc.d/50_tools/20_bat.zsh" = {}
 "~/.zshrc.d/50_tools/30_lazygit.zsh" = {}
 "~/.zshrc.d/50_tools/40_fzf.zsh" = {}
 "~/.zshrc.d/50_tools/50_sessions.zsh" = {}
-"~/.zshrc.d/50_tools/fzf_catppina.sh" = {}
+"~/.zshrc.d/50_tools/fzf_catppina_light.sh" = {}
+"~/.zshrc.d/50_tools/fzf_catppina_dark.sh" = {}
 "~/.zshrc.d/60_shell/10_abbreviations.zsh" = {}
 
 "~/.config/bat/bat.conf" = {}
-"~/.config/bat/themes/catppina.tmTheme" = {}
+"~/.config/bat/themes/catppina_light.tmTheme" = {}
+"~/.config/bat/themes/catppina_dark.tmTheme" = {}
 
 "~/.config/btop/btop.conf" = {}
-"~/.config/btop/themes/catppina.theme" = {}
+"~/.config/btop/themes/catppina_light.theme" = {}
+"~/.config/btop/themes/catppina_dark.theme" = {}
 
-"~/.config/delta/catppina.gitconfig" = {}
+"~/.config/delta/catppina_light.gitconfig" = {}
+"~/.config/delta/catppina_dark.gitconfig" = {}
 
 "~/.config/fastfetch/config.jsonc" = {}
 
 "~/.config/helix/config.toml" = {}
 "~/.config/helix/languages.toml" = {}
-"~/.config/helix/themes/catppina.toml" = {}
+"~/.config/helix/themes/catppina_light.toml" = {}
+"~/.config/helix/themes/catppina_dark.toml" = {}
 
 "~/.config/lazygit/config.yml" = {}
 "~/.config/lazygit/theme.yml" = {}
+"~/.config/lazygit/theme_light.yml" = {}
 
 "~/.config/nvim/init.lua" = {}
 "~/.config/nvim/stylua.toml" = {}
@@ -166,10 +172,13 @@ zls = "0.16"
 "~/.config/nvim/lua/pinanek/plugin_manager.lua" = {}
 "~/.config/nvim/queries/gotmpl/injections.scm" = {}
 
-"~/.config/vivid/catppina.yaml" = {}
+"~/.config/vivid/catppina_light.yaml" = {}
+"~/.config/vivid/catppina_dark.yaml" = {}
 
-"~/.config/yazi/theme.toml" = {}
 "~/.config/yazi/yazi.toml" = {}
+"~/.config/yazi/theme_light.toml" = {}
+"~/.config/yazi/theme_dark.toml" = {}
 
 "~/.config/zed/settings.json" = {}
-"~/.config/zed/themes/catppina.json" = {}
+"~/.config/zed/themes/catppina_light.json" = {}
+"~/.config/zed/themes/catppina_dark.json" = {}

@@ -45,4 +45,4 @@
 
 [dotfiles]
 "~/.config/ghostty/config" = {}
-"~/.config/ghostty/themes/catppina" = {}
+# "~/.config/ghostty/themes/catppina" = {}
