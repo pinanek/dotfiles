@@ -45,4 +45,5 @@
 
 [dotfiles]
 "~/.config/ghostty/config" = {}
-# "~/.config/ghostty/themes/catppina" = {}
+"~/.config/ghostty/themes/catppina_light" = {}
+"~/.config/ghostty/themes/catppina_dark" = {}

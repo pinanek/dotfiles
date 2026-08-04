@@ -31,7 +31,7 @@
 
   // UI
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Catppuccin Latte (Catppina)",
     "dark": "Catppuccin Mocha (Catppina)",
   },
