@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+local_bin="$HOME/.local/bin"
+uv="$local_bin/uv"
+mkdir -p "$local_bin"
+
+if [[ -x "$uv" ]]; then
+    log_info 'uv is already installed.'
+else
+    log_info 'Installing uv...'
+    curl -LsSf https://astral.sh/uv/install.sh |
+        env UV_INSTALL_DIR="$local_bin" UV_NO_MODIFY_PATH=1 sh
+fi
+
+python_dir=$("$uv" python dir)
+if [[ -d "$python_dir" ]] &&
+    find "$python_dir" -mindepth 1 -maxdepth 1 -type d -print -quit | grep -q .; then
+    log_info 'A uv-managed Python is already installed.'
+else
+    log_info 'Installing latest Python...'
+    "$uv" python install
+fi

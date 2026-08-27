@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+local_bin="$HOME/.local/bin"
+fnm="$local_bin/fnm"
+mkdir -p "$local_bin"
+
+if [[ -x "$fnm" ]]; then
+    log_info 'fnm is already installed.'
+else
+    log_info 'Installing fnm...'
+    curl -fsSL https://fnm.vercel.app/install |
+        bash -s -- --install-dir "$local_bin" --skip-shell --force-install
+fi
+
+if "$fnm" exec --using=lts-latest -- node --version >/dev/null 2>&1; then
+    log_info 'Node.js LTS is already installed.'
+else
+    log_info 'Installing latest Node.js LTS...'
+    "$fnm" install --lts
+fi
+
+if command -v pnpm >/dev/null 2>&1 ||
+    [[ -x "${PNPM_HOME:-}/pnpm" ]] ||
+    [[ -x "$HOME/Library/pnpm/pnpm" ]] ||
+    [[ -x "$HOME/.local/share/pnpm/pnpm" ]]; then
+    log_info 'pnpm is already installed.'
+else
+    log_info 'Installing pnpm...'
+    (
+        tmp_rc=$(mktemp)
+        trap 'rm -f "$tmp_rc"' EXIT
+
+        curl -fsSL https://get.pnpm.io/install.sh |
+            env ENV="$tmp_rc" SHELL=/bin/sh sh -
+    )
+fi

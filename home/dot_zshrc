@@ -1,0 +1,154 @@
+# ── Environment ──────────────────────────────────────────────
+
+# Defaults
+export SHELL="${SHELL:-$(command -v zsh)}"
+export EDITOR="${EDITOR:-$(command -v hx)}"
+
+# ── PATH ─────────────────────────────────────────────────────
+
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+
+# `path` is zsh's array representation of $PATH.
+# `-U` automatically removes duplicate entries.
+typeset -U path PATH
+
+path=(
+  "$XDG_BIN_HOME"
+  "$HOME/.cargo/bin"
+  "$PNPM_HOME/bin"
+  $path
+)
+
+# ── History ──────────────────────────────────────────────────
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=$HISTSIZE
+
+setopt appendhistory
+setopt sharehistory
+
+setopt hist_ignore_space
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_find_no_dups
+setopt hist_save_no_dups
+
+# ── Colors ───────────────────────────────────────────────────
+
+if (( $+commands[vivid] )); then
+  vivid_theme="$XDG_CONFIG_HOME/vivid/catppina_dark.yaml"
+
+  if [[ -r "$vivid_theme" ]]; then
+    export LS_COLORS="$(vivid generate "$vivid_theme")"
+  fi
+
+  unset vivid_theme
+fi
+
+# ── Plugins ──────────────────────────────────────────────────
+
+antidote_dir="${XDG_DATA_HOME:-$HOME/.local/share}/antidote"
+antidote_sh="$antidote_dir/antidote.zsh"
+
+plugins_txt="$HOME/.zsh_plugins.txt"
+plugins_zsh="${XDG_CACHE_HOME:-$HOME/.cache}/antidote/plugins.zsh"
+
+# Install Antidote from Git when it is not available.
+if [[ ! -r "$antidote_sh" ]]; then
+  mkdir -p "${antidote_dir:h}"
+
+  command git clone \
+    --depth=1 \
+    https://github.com/mattmc3/antidote.git \
+    "$antidote_dir"
+fi
+
+if [[ -r "$antidote_sh" ]]; then
+  if [[
+    ! -f "$plugins_zsh" ||
+    "$plugins_zsh" -ot "$plugins_txt"
+  ]]; then
+    mkdir -p "${plugins_zsh:h}"
+
+    (
+      source "$antidote_sh"
+      antidote bundle < "$plugins_txt" >| "$plugins_zsh"
+    )
+  fi
+
+  source "$plugins_zsh"
+fi
+
+unset antidote_dir
+unset antidote_sh
+unset plugins_txt
+unset plugins_zsh
+
+# ── Completion ───────────────────────────────────────────────
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+
+# Dots
+if (( $+commands[dots] && $+functions[compdef] )); then
+  eval "$(dots completions zsh)"
+fi
+
+# ── Prompt ───────────────────────────────────────────────────
+
+autoload -Uz promptinit
+promptinit
+
+zstyle ':prompt:pure:git:stash' show yes
+
+prompt pure
+
+# Add the zmx session name before Pure's prompt.
+PROMPT="%F{7}${ZMX_SESSION:+[$ZMX_SESSION] }%f$PROMPT"
+
+# ── FZF ──────────────────────────────────────────────────────
+
+fzf_theme="$XDG_CONFIG_HOME/fzf/themes/catppina_dark.zsh"
+
+if [[ -r "$fzf_theme" ]]; then
+  source "$fzf_theme"
+fi
+
+unset fzf_theme
+
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+
+if (( $+commands[fzf] )); then
+  FZF_ALT_C_COMMAND= \
+  FZF_CTRL_T_COMMAND= \
+    eval "$(fzf --zsh)"
+fi
+
+# ── Shell Integrations ───────────────────────────────────────
+
+# fnm
+if (( $+commands[fnm] )); then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
+# uv
+if (( $+commands[uv] )); then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
+if (( $+commands[uvx] )); then
+  eval "$(uvx --generate-shell-completion zsh)"
+fi
+
+# ── Tool Configuration ───────────────────────────────────────
+
+# lazygit
+export LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,$XDG_CONFIG_HOME/lazygit/theme.yml"
+
+# ── Local Overrides ──────────────────────────────────────────
+
+if [[ -r "$HOME/.zshrc_local" ]]; then
+  source "$HOME/.zshrc_local"
+fi

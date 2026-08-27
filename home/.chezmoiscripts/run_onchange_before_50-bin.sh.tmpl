@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+local_bin="$HOME/.local/bin"
+bin="$local_bin/bin"
+mkdir -p "$local_bin"
+
+if [[ -x "$bin" ]]; then
+    log_info 'bin is already installed.'
+    exit 0
+fi
+
+case "$(uname -s)" in
+    Darwin) os='darwin' ;;
+    Linux) os='linux' ;;
+    *)
+        log_warning "Cannot install bin: unsupported operating system $(uname -s)."
+        exit 1
+        ;;
+esac
+
+case "$(uname -m)" in
+    x86_64 | amd64) architecture='amd64' ;;
+    arm64 | aarch64) architecture='arm64' ;;
+    *)
+        log_warning "Cannot install bin: unsupported architecture $(uname -m)."
+        exit 1
+        ;;
+esac
+
+log_info 'Finding the latest bin release...'
+release_json=$(curl -fsSL https://api.github.com/repos/marcosnils/bin/releases/latest)
+version=$(printf '%s\n' "$release_json" |
+    grep -o '"tag_name"[[:space:]]*:[[:space:]]*"v[^"]*"' |
+    sed -n 's/.*"v\([^"]*\)"/\1/p' |
+    sed -n '1p')
+
+if [[ -z "$version" ]]; then
+    log_warning 'Cannot install bin: the latest release version could not be determined.'
+    exit 1
+fi
+
+asset="bin_${version}_${os}_${architecture}"
+release_url="https://github.com/marcosnils/bin/releases/download/v$version"
+temporary_dir=$(mktemp -d "${TMPDIR:-/tmp}/bin-bootstrap.XXXXXX")
+trap 'rm -rf "$temporary_dir"' EXIT
+
+log_info "Downloading bin v$version..."
+curl -fsSL "$release_url/$asset" -o "$temporary_dir/$asset"
+curl -fsSL "$release_url/checksums.txt" -o "$temporary_dir/checksums.txt"
+
+expected_checksum=$(awk -v asset="$asset" '$2 == asset { print $1; exit }' \
+    "$temporary_dir/checksums.txt")
+
+if [[ ! "$expected_checksum" =~ ^[[:xdigit:]]{64}$ ]]; then
+    log_warning 'Cannot install bin: no valid checksum was published for this asset.'
+    exit 1
+fi
+
+if command -v sha256sum >/dev/null 2>&1; then
+    printf '%s  %s\n' "$expected_checksum" "$temporary_dir/$asset" |
+        sha256sum --check --status -
+elif command -v shasum >/dev/null 2>&1; then
+    actual_checksum=$(shasum -a 256 "$temporary_dir/$asset" | awk '{ print $1 }')
+    if [[ "$actual_checksum" != "$expected_checksum" ]]; then
+        log_warning 'Cannot install bin: checksum verification failed.'
+        exit 1
+    fi
+else
+    log_warning 'Cannot install bin: no SHA-256 checksum utility is available.'
+    exit 1
+fi
+
+chmod 0755 "$temporary_dir/$asset"
+
+log_info 'Installing bin into ~/.local/bin...'
+env PATH="$local_bin:$PATH" \
+    "$temporary_dir/$asset" install github.com/marcosnils/bin "$bin"
+
+if [[ ! -x "$bin" ]]; then
+    log_warning "bin installation completed without creating $bin."
+    exit 1
+fi

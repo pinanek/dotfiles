@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+catppina_repository='https://github.com/pinanek/catppina.git'
+
+log() {
+    printf 'dots: %s\n' "$*"
+}
+
+fail() {
+    printf 'dots: %s\n' "$*" >&2
+    exit 1
+}
+
+require_command() {
+    command -v "$1" >/dev/null 2>&1 || fail "required command not found: $1"
+}
+
+copy_theme() {
+    local source=$1
+    local destination=$2
+
+    [[ -f "$catppina_dir/dist/$source" ]] || fail "theme asset not found: $source"
+    mkdir -p "$(dirname "$source_dir/$destination")"
+    install -m 0644 "$catppina_dir/dist/$source" "$source_dir/$destination"
+}
+
+pull_themes() {
+    local profile
+    local data_home
+    local source_dir
+
+    profile=$(chezmoi execute-template '{{ .profile }}')
+    source_dir=$(chezmoi source-path)
+    data_home=${XDG_DATA_HOME:-"$HOME/.local/share"}
+    catppina_dir="$data_home/catppina"
+
+    if [[ -d "$catppina_dir/.git" ]]; then
+        log 'updating Catppina themes...'
+        git -C "$catppina_dir" fetch --depth=1 origin main
+        git -C "$catppina_dir" reset --hard origin/main
+    elif [[ -e "$catppina_dir" ]]; then
+        fail "$catppina_dir exists but is not a Git checkout"
+    else
+        log 'cloning Catppina themes...'
+        git clone --depth=1 "$catppina_repository" "$catppina_dir"
+    fi
+
+    log 'copying shared themes into chezmoi source state...'
+    copy_theme btop/catppina_dark.theme dot_config/btop/themes/catppina_dark.theme
+    copy_theme delta/catppina_dark.gitconfig dot_config/delta/catppina_dark.gitconfig
+    copy_theme fzf/catppina_dark.sh dot_config/fzf/themes/catppina_dark.zsh
+    copy_theme gitui/catppina_dark.ron dot_config/gitui/theme.ron
+    copy_theme helix/catppina_dark.toml dot_config/helix/themes/catppina_dark.toml
+    copy_theme helix/catppina_light.toml dot_config/helix/themes/catppina_light.toml
+    copy_theme posting/catppina_dark.yaml dot_local/share/posting/themes/catppina_dark.yaml
+    copy_theme yazi/catppina_dark.toml dot_config/yazi/theme.toml
+
+    if [[ "$profile" == 'pinamac' ]]; then
+        log 'copying PinaMac themes into chezmoi source state...'
+        copy_theme ghostty/catppina_dark.conf dot_config/ghostty/themes/catppina_dark
+        copy_theme zed/catppina_dark.json dot_config/zed/themes/catppina_dark.json
+        copy_theme zed/catppina_light.json dot_config/zed/themes/catppina_light.json
+    fi
+
+    log 'applying updated source state...'
+    chezmoi apply
+}
+
+print_zsh_completions() {
+    cat <<'ZSH'
+_dots() {
+  local -a commands
+
+  commands=(
+    'pull-themes:Update Catppina themes and apply the chezmoi source state'
+    'completions:Generate shell completions'
+  )
+
+  if (( CURRENT == 2 )); then
+    _describe -t commands 'dots command' commands
+  elif [[ $words[2] == completions ]]; then
+    _values 'shell' zsh
+  fi
+}
+
+compdef _dots dots
+ZSH
+}
+
+usage() {
+    cat <<'USAGE'
+Usage: dots <command>
+
+Commands:
+  pull-themes      Update Catppina, copy themes into chezmoi source state, and apply them.
+  completions zsh  Generate Zsh completions.
+USAGE
+}
+
+case "${1:-}" in
+    pull-themes)
+        require_command chezmoi
+        require_command git
+        require_command install
+        pull_themes
+        ;;
+    completions)
+        case "${2:-}" in
+            zsh) print_zsh_completions ;;
+            *) fail "unsupported completion shell: ${2:-missing}" ;;
+        esac
+        ;;
+    -h | --help | help | '')
+        usage
+        ;;
+    *)
+        fail "unknown command: $1"
+        ;;
+esac

@@ -1,0 +1,10 @@
+{{- if ne .profile "pinamac" }}
+**/10-profile-pinamac.sh
+.config/ghostty/**
+.config/zed/**
+{{- end }}
+
+{{- if ne .profile "isl-server" }}
+**/10-profile-isl-server.sh
+**/70-isl-server-tools.sh
+{{- end }}

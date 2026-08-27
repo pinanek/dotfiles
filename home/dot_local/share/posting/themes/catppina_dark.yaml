@@ -1,0 +1,38 @@
+name: "catppina_dark"
+primary: "#9ccfe9" # buttons, fixed table columns
+secondary: "#9ccfe9"  # method selector, some minor labels
+accent: "#c7e4f3"  # header text, scrollbars, cursors, focus highlights
+background: "#19191a" # background colors
+surface: "#212122"  # panels, etc
+error: "#f88d8e"  # error messages
+success: "#7fc7a4"  # success messages
+warning: "#e9cc9c"  # warning messages
+dark: "true"
+
+text_area:
+  cursor: "reverse #ffcdc7"
+  cursor_line: "underline #c3c3c4"
+  selection: "reverse #939394"
+  gutter: "bold #7fc7a4"
+  matched_bracket: "reverse #b2b2b3"
+
+url:
+  base: "italic #9ccfe9"
+  protocol: "bold #7ecebe"
+  separator: "#c3c3c4"
+
+syntax:
+  json_key: "italic #9ccfe9"
+  json_number: "#fbc19d"
+  json_string: "#7fc7a4"
+  json_boolean: "#8fc9e6"
+  json_null: "#939394"
+
+method:
+  get: "bold #9ccfe9"
+  post: "bold #7fc7a4"
+  put: "bold #e9cc9c"
+  delete: "bold #f88d8e"
+  patch: "bold #7ecebe"
+  options: "bold #c1d0f2"
+  head: "bold #b5ccff"

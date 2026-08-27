@@ -1,0 +1,38 @@
+name: "catppina_light"
+primary: "#347aa5" # buttons, fixed table columns
+secondary: "#347aa5"  # method selector, some minor labels
+accent: "#285d7e"  # header text, scrollbars, cursors, focus highlights
+background: "#f7f7f8" # background colors
+surface: "#eeeeef"  # panels, etc
+error: "#c94f55"  # error messages
+success: "#398460"  # success messages
+warning: "#8b6b22"  # warning messages
+dark: "false"
+
+text_area:
+  cursor: "reverse #c66a5e"
+  cursor_line: "underline #303033"
+  selection: "reverse #737378"
+  gutter: "bold #398460"
+  matched_bracket: "reverse #49494d"
+
+url:
+  base: "italic #347aa5"
+  protocol: "bold #287f76"
+  separator: "#303033"
+
+syntax:
+  json_key: "italic #347aa5"
+  json_number: "#bd6b32"
+  json_string: "#398460"
+  json_boolean: "#367fa3"
+  json_null: "#737378"
+
+method:
+  get: "bold #347aa5"
+  post: "bold #398460"
+  put: "bold #8b6b22"
+  delete: "bold #c94f55"
+  patch: "bold #287f76"
+  options: "bold #6579ad"
+  head: "bold #647fc5"

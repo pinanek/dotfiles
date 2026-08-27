@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+if [[ "$(uname -s)" != 'Darwin' ]]; then
+    log_warning 'Skipping Homebrew installation: the pinamac profile requires macOS.'
+    exit 0
+fi
+
+find_brew() {
+    local candidate
+
+    if command -v brew >/dev/null 2>&1; then
+        command -v brew
+        return
+    fi
+
+    for candidate in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+        if [[ -x "$candidate" ]]; then
+            printf '%s\n' "$candidate"
+            return
+        fi
+    done
+
+    return 1
+}
+
+if ! brew_bin=$(find_brew); then
+    log_info 'Requesting sudo access for Homebrew...'
+    /usr/bin/sudo -v
+
+    log_info 'Installing Homebrew...'
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    if ! brew_bin=$(find_brew); then
+        log_warning 'Homebrew installation completed without creating a known brew executable.'
+        exit 1
+    fi
+fi
+
+brewfile=$(mktemp "${TMPDIR:-/tmp}/pinamac.Brewfile.XXXXXX")
+trap 'rm -f "$brewfile"' EXIT
+cat >"$brewfile" <<'BREWFILE'
+{{ template "pinamac.Brewfile" . }}
+BREWFILE
+
+log_info 'Installing and updating PinaMac packages...'
+HOMEBREW_NO_ASK=1 "$brew_bin" bundle --file="$brewfile"

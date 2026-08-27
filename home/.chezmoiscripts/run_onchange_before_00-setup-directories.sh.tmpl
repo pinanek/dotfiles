@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -eu
+
+log() {
+    printf 'chezmoi: %s\n' "$*"
+}
+
+create_directory() {
+    directory=$1
+
+    if [ ! -d "$directory" ]; then
+        log "creating $directory"
+        mkdir -p "$directory"
+    fi
+}
+
+log "setting up home directories"
+
+create_directory "{{ .chezmoi.homeDir }}/.config"
+create_directory "{{ .chezmoi.homeDir }}/.local/bin"
+create_directory "{{ .chezmoi.homeDir }}/.local/share"
+create_directory "{{ .chezmoi.homeDir }}/.local/state"
+
+log "home directory setup complete"

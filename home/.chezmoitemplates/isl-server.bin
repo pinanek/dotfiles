@@ -1,0 +1,16 @@
+github.com/asciinema/asciinema asciinema asciinema-x86_64-unknown-linux-gnu
+github.com/aristocratos/btop btop btop-x86_64-unknown-linux-musl.tar.gz/btop
+github.com/schollz/croc croc *Linux-64bit.tar.gz/croc
+github.com/eza-community/eza eza eza_x86_64-unknown-linux-gnu.tar.gz/eza
+github.com/fastfetch-cli/fastfetch fastfetch fastfetch-linux-amd64.tar.gz/fastfetch
+github.com/sharkdp/fd fd fd-v*-x86_64-unknown-linux-gnu.tar.gz/fd
+github.com/junegunn/fzf fzf fzf-*-linux_amd64.tar.gz/fzf
+github.com/cli/cli gh gh_*_linux_amd64.tar.gz/gh
+github.com/dandavison/delta delta delta-*-x86_64-unknown-linux-gnu.tar.gz/delta
+github.com/gitui-org/gitui gitui gitui-linux-x86_64.tar.gz/gitui
+github.com/svenstaro/miniserve miniserve miniserve-*-x86_64-unknown-linux-gnu
+github.com/BurntSushi/ripgrep rg ripgrep-*-x86_64-unknown-linux-musl.tar.gz/rg
+github.com/thomasschafer/scooter scooter *-x86_64-unknown-linux-musl.tar.gz/scooter
+github.com/sharkdp/vivid vivid vivid-v*-x86_64-unknown-linux-gnu.tar.gz/vivid
+github.com/sxyazi/yazi yazi yazi-x86_64-unknown-linux-gnu.zip/yazi
+github.com/neurosnap/zmx zmx zmx-*-linux-x86_64.tar.gz/zmx

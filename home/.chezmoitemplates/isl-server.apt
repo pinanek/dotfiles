@@ -1,0 +1,10 @@
+autossh
+build-essential
+ca-certificates
+cbonsai
+curl
+ffmpeg
+file
+git
+git-lfs
+zsh

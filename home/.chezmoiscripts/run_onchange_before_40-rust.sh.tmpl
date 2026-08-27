@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+cargo_bin="$HOME/.cargo/bin"
+rustup="$cargo_bin/rustup"
+cargo="$cargo_bin/cargo"
+
+if [[ -x "$rustup" && -x "$cargo" ]]; then
+    log_info 'Rust and Cargo are already installed.'
+else
+    log_info 'Installing the latest stable Rust toolchain and Cargo...'
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs |
+        sh -s -- -y --no-modify-path --profile minimal
+fi
+
+if "$rustup" component list --installed | grep -q '^rust-analyzer-'; then
+    log_info 'rust-analyzer is already installed.'
+else
+    log_info 'Installing rust-analyzer...'
+    "$rustup" component add rust-analyzer
+fi

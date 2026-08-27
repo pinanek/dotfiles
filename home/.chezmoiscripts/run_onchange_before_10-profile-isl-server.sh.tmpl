@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+if [[ "$(uname -s)" != 'Linux' ]]; then
+    log_warning 'Skipping isl-server packages: this profile requires Linux.'
+    exit 0
+fi
+
+if ! command -v apt-get >/dev/null 2>&1; then
+    log_warning 'Cannot install isl-server packages: apt-get is unavailable.'
+    exit 1
+fi
+
+run_as_root() {
+    if (( EUID == 0 )); then
+        "$@"
+    else
+        sudo "$@"
+    fi
+}
+
+if (( EUID != 0 )); then
+    if ! command -v sudo >/dev/null 2>&1; then
+        log_warning 'Cannot install isl-server packages: sudo is unavailable.'
+        exit 1
+    fi
+
+    log_info 'Requesting sudo access for APT...'
+    sudo -v
+fi
+
+packages_file=$(mktemp "${TMPDIR:-/tmp}/isl-server.apt.XXXXXX")
+trap 'rm -f "$packages_file"' EXIT
+cat >"$packages_file" <<'PACKAGES'
+{{ template "isl-server.apt" . }}
+PACKAGES
+
+mapfile -t packages < <(
+    sed \
+        -e 's/[[:space:]]*#.*$//' \
+        -e '/^[[:space:]]*$/d' \
+        "$packages_file"
+)
+
+log_info 'Updating Debian package metadata...'
+run_as_root apt-get update
+
+log_info 'Installing isl-server system packages...'
+run_as_root env DEBIAN_FRONTEND=noninteractive \
+    apt-get install --yes --no-install-recommends "${packages[@]}"
+
+target_user=$(id -un)
+zsh_path=$(command -v zsh)
+current_shell=$(getent passwd "$target_user" | cut -d: -f7)
+
+if [[ "$current_shell" == "$zsh_path" ]]; then
+    log_info "zsh is already the default shell for $target_user."
+else
+    log_info "Changing the default shell for $target_user to $zsh_path..."
+    run_as_root chsh -s "$zsh_path" "$target_user"
+fi
+
+local_bin="$HOME/.local/bin"
+mkdir -p "$local_bin"
+
+if command -v fd >/dev/null 2>&1; then
+    log_info 'fd is already available.'
+elif [[ -x /usr/bin/fdfind && ! -e "$local_bin/fd" ]]; then
+    log_info 'Creating fd compatibility symlink for fd-find...'
+    ln -s /usr/bin/fdfind "$local_bin/fd"
+elif [[ ! -x /usr/bin/fdfind ]]; then
+    log_warning 'fd-find was installed without creating /usr/bin/fdfind.'
+else
+    log_warning "Cannot create fd symlink: $local_bin/fd already exists."
+fi

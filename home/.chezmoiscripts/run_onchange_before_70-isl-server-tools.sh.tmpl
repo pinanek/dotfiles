@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+if [[ "$(uname -s)" != 'Linux' ]]; then
+    log_warning 'Skipping isl-server tools: this profile requires Linux.'
+    exit 0
+fi
+
+local_bin="$HOME/.local/bin"
+bin_manager="$local_bin/bin"
+uv="$local_bin/uv"
+mkdir -p "$local_bin"
+
+if [[ ! -x "$bin_manager" ]]; then
+    log_warning 'Cannot install binary applications: bin is unavailable.'
+    exit 1
+fi
+
+install_bin_tool() {
+    local source=$1
+    local executable=$2
+    local asset_pattern=${3:-}
+
+    if [[ -x "$local_bin/$executable" ]]; then
+        log_info "$executable is already installed."
+    else
+        log_info "Installing $executable with bin..."
+        if [[ -n "$asset_pattern" ]]; then
+            env PATH="$local_bin:$PATH" \
+                "$bin_manager" install --name "$asset_pattern" \
+                "$source" "$local_bin/$executable"
+        else
+            env PATH="$local_bin:$PATH" \
+                "$bin_manager" install "$source" "$local_bin/$executable"
+        fi
+    fi
+}
+
+while read -r source executable asset_pattern; do
+    [[ -n "$source" && -n "$executable" ]] || continue
+    install_bin_tool "$source" "$executable" "$asset_pattern"
+done <<'BINARIES'
+{{ template "isl-server.bin" . }}
+BINARIES
+
+if [[ ! -x "$uv" ]]; then
+    log_warning 'Cannot install uv tools: uv is unavailable.'
+    exit 1
+fi
+
+install_uv_tool() {
+    local package=$1
+    local executable=$2
+
+    if command -v "$executable" >/dev/null 2>&1 || [[ -x "$local_bin/$executable" ]]; then
+        log_info "$executable is already installed."
+    else
+        log_info "Installing $package with uv..."
+        "$uv" tool install "$package"
+    fi
+}
+
+while read -r package executable; do
+    [[ -n "$package" && -n "$executable" ]] || continue
+    install_uv_tool "$package" "$executable"
+done <<'UV_TOOLS'
+{{ template "isl-server.uv" . }}
+UV_TOOLS

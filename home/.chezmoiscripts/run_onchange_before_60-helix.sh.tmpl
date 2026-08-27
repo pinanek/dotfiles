@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+cargo_bin="$HOME/.cargo/bin"
+hx="$cargo_bin/hx"
+
+if [[ -x "$hx" ]]; then
+    log_info 'Helix is already installed.'
+    exit 0
+fi
+
+helix_source="${XDG_DATA_HOME:-$HOME/.local/share}/helix/source"
+
+if [[ -d "$helix_source/.git" ]]; then
+    log_info 'Updating Helix source...'
+    git -C "$helix_source" pull --ff-only
+elif [[ -e "$helix_source" ]]; then
+    log_warning "Cannot install Helix: $helix_source exists but is not a Git checkout."
+    exit 1
+else
+    log_info 'Cloning Helix source...'
+    mkdir -p "$(dirname "$helix_source")"
+    git clone https://github.com/helix-editor/helix "$helix_source"
+fi
+
+log_info 'Building and installing Helix...'
+(
+    cd "$helix_source"
+    env HELIX_DEFAULT_RUNTIME="$helix_source/runtime" "$cargo_bin/cargo" install --path helix-term --locked --force
+)
+
+log_info 'Validating Helix installation...'
+"$hx" --health

@@ -1,0 +1,78 @@
+{
+  // Editor
+  "helix_mode": true,
+  "relative_line_numbers": "enabled",
+
+  "show_whitespaces": "all",
+  "soft_wrap": "editor_width",
+  "colorize_brackets": true,
+
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+      "max_severity": null
+    }
+  },
+
+  "edit_predictions": {
+    "provider": "none"
+  },
+
+  // Fonts
+  "buffer_font_size": 14,
+  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_fallbacks": ["Symbols Nerd Font"],
+  "buffer_line_height": "comfortable",
+
+  "ui_font_family": "JetBrains Mono NL",
+  "ui_font_fallbacks": ["Symbols Nerd Font"],
+
+  "terminal": {
+    "font_family": "JetBrains Mono",
+    "font_fallbacks": ["Symbols Nerd Font"],
+    "line_height": "comfortable"
+  },
+
+  // UI
+  "theme": {
+    "mode": "dark",
+    "light": "Catppuccin Latte (Catppina)",
+    "dark": "Catppuccin Mocha (Catppina)"
+  },
+  "icon_theme": "Symbols Icon Theme",
+
+  "outline_panel": { "dock": "right" },
+  "git_panel": { "dock": "right" },
+  "project_panel": {
+    "dock": "left"
+  },
+
+  // Behaviors
+  "confirm_quit": true,
+
+  // LSP
+  "inlay_hints": {
+    "enabled": false
+  },
+
+  // Extensions
+  "auto_install_extensions": {
+    "symbols": true,
+    "dockerfile": true,
+    "just": true,
+    "tsgo": true,
+    "toml": true,
+    "tombi": true,
+    "git-firefly": true
+  },
+
+  // Crappy stuff
+  "collaboration_panel": {
+    "dock": "left",
+    "button": false
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  }
+}

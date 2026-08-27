@@ -1,0 +1,4 @@
+{{- $profile := promptChoiceOnce . "profile" "Profile" (list "pinamac" "isl-server") -}}
+
+[data]
+    profile = {{ $profile | quote }}

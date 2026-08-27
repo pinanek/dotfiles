@@ -1,0 +1,8 @@
+mattmc3/ez-compinit
+zsh-users/zsh-completions kind:fpath path:src
+zsh-users/zsh-autosuggestions
+Aloxaf/fzf-tab
+olets/zsh-abbr
+romkatv/zsh-bench kind:path
+sindresorhus/pure kind:fpath
+michel-kraemer/zsh-patina
