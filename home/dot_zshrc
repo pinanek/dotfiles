@@ -152,3 +152,8 @@ export LG_CONFIG_FILE="$XDG_CONFIG_HOME/lazygit/config.yml,$XDG_CONFIG_HOME/lazy
 if [[ -r "$HOME/.zshrc_local" ]]; then
   source "$HOME/.zshrc_local"
 fi
+
+# zsh-patina
+if (( $+commands[zsh-patina] )); then
+  eval "$(zsh-patina activate)"
+fi

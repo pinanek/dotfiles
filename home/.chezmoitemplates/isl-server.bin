@@ -14,3 +14,4 @@ github.com/thomasschafer/scooter scooter *-x86_64-unknown-linux-musl.tar.gz/scoo
 github.com/sharkdp/vivid vivid vivid-v*-x86_64-unknown-linux-gnu.tar.gz/vivid
 github.com/sxyazi/yazi yazi yazi-x86_64-unknown-linux-gnu.zip/yazi
 github.com/neurosnap/zmx zmx zmx-*-linux-x86_64.tar.gz/zmx
+github.com/michel-kraemer/zsh-patina zsh-patina zsh-patina-v*-x86_64-unknown-linux-gnu.tar.gz/*/zsh-patina
