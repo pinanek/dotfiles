@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+local_bin="$HOME/.local/bin"
+bin_manager="$local_bin/bin"
+cargo="$HOME/.cargo/bin/cargo"
+uv="$local_bin/uv"
+
+{{ template "tools.pnpm.sh" . }}
+{{ template "tools.bin.sh" . }}
+{{ template "tools.cargo.sh" . }}
+{{ template "tools.uv.sh" . }}
+
+install_pnpm_tools
+
+case '{{ .chezmoi.os }}' in
+    darwin)
+        install_bin_tools <<'BIN_TOOLS'
+{{ template "tools.macos.bin" . }}
+BIN_TOOLS
+        ;;
+    linux)
+        install_bin_tools <<'BIN_TOOLS'
+{{ template "tools.linux.bin" . }}
+BIN_TOOLS
+        ;;
+    *)
+        log_warning "Skipping standalone development tools: unsupported operating system {{ .chezmoi.os }}."
+        ;;
+esac
+
+install_cargo_tools
+
+install_uv_tools <<'UV_TOOLS'
+{{ template "tools.uv" . }}
+UV_TOOLS

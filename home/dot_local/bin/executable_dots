@@ -26,6 +26,180 @@ copy_theme() {
     install -m 0644 "$catppina_dir/dist/$source" "$source_dir/$destination"
 }
 
+run_update_step() {
+    local description=$1
+    shift
+
+    log "$description..."
+    if "$@"; then
+        return 0
+    fi
+
+    failed_updates+=("$description")
+    log "failed: $description"
+}
+
+update_pnpm_packages() {
+    if command -v pnpm >/dev/null 2>&1; then
+        run_update_step 'Updating global pnpm packages' pnpm update --global
+    else
+        log 'Skipping pnpm: command not found.'
+    fi
+}
+
+update_node() {
+    if command -v fnm >/dev/null 2>&1; then
+        run_update_step 'Updating Node.js LTS' fnm install --lts
+    else
+        log 'Skipping fnm: command not found.'
+    fi
+}
+
+update_rust() {
+    if command -v rustup >/dev/null 2>&1; then
+        run_update_step 'Updating Rust toolchains' rustup update
+    else
+        log 'Skipping Rust: rustup not found.'
+    fi
+}
+
+update_cargo_tools() {
+    local source_dir
+    local manifest
+    local package
+
+    if ! command -v cargo >/dev/null 2>&1; then
+        log 'Skipping Cargo tools: cargo not found.'
+        return
+    fi
+
+    source_dir=$(chezmoi source-path)
+    manifest="$source_dir/.chezmoitemplates/tools.cargo"
+
+    if [[ ! -r "$manifest" ]]; then
+        log "Skipping Cargo tools manifest: not found at $manifest."
+        return
+    fi
+
+    while read -r package; do
+        [[ -n "$package" && "$package" != \#* ]] || continue
+        run_update_step "Upgrading $package with Cargo" \
+            cargo install --locked --force "$package"
+    done < "$manifest"
+}
+
+install_missing_bin_tools() {
+    local source_dir
+    local manifest
+    local source
+    local executable
+    local asset_pattern
+
+    source_dir=$(chezmoi source-path)
+    manifest="$source_dir/.chezmoitemplates/isl-server.bin"
+
+    if [[ ! -r "$manifest" ]]; then
+        log "Skipping bin manifest: not found at $manifest."
+        return
+    fi
+
+    mkdir -p "$HOME/.local/bin"
+
+    while read -r source executable asset_pattern; do
+        [[ -n "$source" && -n "$executable" ]] || continue
+
+        if [[ -x "$HOME/.local/bin/$executable" ]]; then
+            continue
+        fi
+
+        if [[ -n "$asset_pattern" ]]; then
+            run_update_step "Installing $executable with bin" \
+                bin install --name "$asset_pattern" "$source" "$HOME/.local/bin/$executable"
+        else
+            run_update_step "Installing $executable with bin" \
+                bin install "$source" "$HOME/.local/bin/$executable"
+        fi
+    done < "$manifest"
+}
+
+update_isl_server_packages() {
+    local apt_get=(apt-get)
+
+    if [[ "$(uname -s)" != 'Linux' ]]; then
+        fail 'the isl-server profile requires Linux'
+    fi
+
+    if ! command -v apt-get >/dev/null 2>&1; then
+        fail 'apt-get is required for the isl-server profile'
+    fi
+
+    if (( EUID != 0 )); then
+        require_command sudo
+        log 'Requesting sudo access for APT...'
+        sudo -v
+        apt_get=(sudo apt-get)
+    fi
+
+    run_update_step 'Updating Debian package metadata' "${apt_get[@]}" update
+    run_update_step 'Upgrading Debian packages' "${apt_get[@]}" upgrade --yes
+
+    if command -v bin >/dev/null 2>&1; then
+        install_missing_bin_tools
+        run_update_step 'Updating bin-managed tools' bin update
+    else
+        log 'Skipping bin: command not found.'
+    fi
+
+    if command -v uv >/dev/null 2>&1; then
+        run_update_step 'Updating uv' uv self update
+        run_update_step 'Upgrading uv tools' uv tool upgrade --all
+        run_update_step 'Upgrading uv-managed Python versions' uv python upgrade
+    else
+        log 'Skipping uv: command not found.'
+    fi
+}
+
+update_pinamac_packages() {
+    if [[ "$(uname -s)" != 'Darwin' ]]; then
+        fail 'the pinamac profile requires macOS'
+    fi
+
+    require_command brew
+    run_update_step 'Updating Homebrew metadata' brew update
+    run_update_step 'Upgrading Homebrew packages' brew upgrade
+
+    if command -v mas >/dev/null 2>&1; then
+        run_update_step 'Upgrading Mac App Store applications' mas upgrade
+    else
+        log 'Skipping Mac App Store applications: mas not found.'
+    fi
+}
+
+update_packages() {
+    local profile
+
+    profile=$(chezmoi execute-template '{{ .profile }}')
+    failed_updates=()
+
+    case "$profile" in
+        pinamac) update_pinamac_packages ;;
+        isl-server) update_isl_server_packages ;;
+        *) fail "unsupported chezmoi profile: $profile" ;;
+    esac
+
+    update_pnpm_packages
+    update_node
+    update_rust
+    update_cargo_tools
+
+    if (( ${#failed_updates[@]} )); then
+        printf 'dots: package update failed for: %s\n' "${failed_updates[*]}" >&2
+        return 1
+    fi
+
+    log 'package updates complete.'
+}
+
 pull_themes() {
     local profile
     local data_home
@@ -75,6 +249,7 @@ _dots() {
 
   commands=(
     'pull-themes:Update Catppina themes and apply the chezmoi source state'
+    'up-pkgs:Update packages managed by the active profile'
     'completions:Generate shell completions'
   )
 
@@ -95,6 +270,7 @@ Usage: dots <command>
 
 Commands:
   pull-themes      Update Catppina, copy themes into chezmoi source state, and apply them.
+  up-pkgs          Update packages managed by the active profile.
   completions zsh  Generate Zsh completions.
 USAGE
 }
@@ -105,6 +281,10 @@ case "${1:-}" in
         require_command git
         require_command install
         pull_themes
+        ;;
+    up-pkgs)
+        require_command chezmoi
+        update_packages
         ;;
     completions)
         case "${2:-}" in

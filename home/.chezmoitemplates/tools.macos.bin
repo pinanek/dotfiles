@@ -1,0 +1,6 @@
+github.com/artempyanykh/marksman marksman marksman-macos
+github.com/astral-sh/ty ty ty-aarch64-apple-darwin.tar.gz/ty
+github.com/mvdan/sh shfmt shfmt_v*_darwin_arm64
+github.com/astral-sh/ruff ruff ruff-aarch64-apple-darwin.tar.gz/ruff
+github.com/dprint/dprint dprint dprint-aarch64-apple-darwin.zip/dprint
+github.com/casey/just just just-*-aarch64-apple-darwin.tar.gz/just

@@ -6,5 +6,5 @@
 
 {{- if ne .profile "isl-server" }}
 **/10-profile-isl-server.sh
-**/70-isl-server-tools.sh
+**/80-isl-server-tools.sh
 {{- end }}
