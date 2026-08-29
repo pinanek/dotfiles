@@ -41,17 +41,36 @@ run_update_step() {
 
 update_pnpm_packages() {
     if command -v pnpm >/dev/null 2>&1; then
+        run_update_step 'Updating pnpm' pnpm self-update
         run_update_step 'Updating global pnpm packages' pnpm update --global
     else
         log 'Skipping pnpm: command not found.'
     fi
 }
 
+update_fnm() {
+    curl -fsSL https://fnm.vercel.app/install |
+        bash -s -- --install-dir "$HOME/.local/bin" --skip-shell --force-install
+}
+
 update_node() {
     if command -v fnm >/dev/null 2>&1; then
+        run_update_step 'Updating fnm' update_fnm
         run_update_step 'Updating Node.js LTS' fnm install --lts
     else
         log 'Skipping fnm: command not found.'
+    fi
+}
+
+update_deno() {
+    local deno="$HOME/.deno/bin/deno"
+
+    if [[ -x "$deno" ]]; then
+        run_update_step 'Updating Deno' "$deno" upgrade
+    elif command -v deno >/dev/null 2>&1; then
+        run_update_step 'Updating Deno' deno upgrade
+    else
+        log 'Skipping Deno: command not found.'
     fi
 }
 
@@ -189,6 +208,7 @@ update_packages() {
 
     update_pnpm_packages
     update_node
+    update_deno
     update_rust
     update_cargo_tools
 

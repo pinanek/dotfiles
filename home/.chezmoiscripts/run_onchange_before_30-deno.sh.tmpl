@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+deno="$HOME/.deno/bin/deno"
+
+if [[ -x "$deno" ]]; then
+    log_info 'Deno is already installed.'
+else
+    log_info 'Installing Deno...'
+    curl -fsSL https://deno.land/install.sh | sh
+fi
+
+if [[ ! -x "$deno" ]]; then
+    log_warning "Deno installation completed without creating $deno."
+    exit 1
+fi

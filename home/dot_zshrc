@@ -15,6 +15,7 @@ typeset -U path PATH
 path=(
   "$XDG_BIN_HOME"
   "$HOME/.cargo/bin"
+  "$HOME/.deno/bin"
   "$PNPM_HOME/bin"
   $path
 )
@@ -132,6 +133,7 @@ fi
 if (( $+commands[fnm] )); then
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
+
 
 # uv
 if (( $+commands[uv] )); then
