@@ -94,7 +94,6 @@ zstyle ':completion:*' menu no
 
 deno_completion_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
 fpath=("$deno_completion_dir" $fpath)
-unset deno_completion_dir
 
 # Dots
 if (( $+commands[dots] && $+functions[compdef] )); then
@@ -139,6 +138,7 @@ fi
 # fnm
 if (( $+commands[fnm] )); then
   eval "$(fnm env --use-on-cd --shell zsh)"
+  eval "$(fnm completions --shell zsh)"
 fi
 
 # pnpm
@@ -146,6 +146,10 @@ if (( $+commands[pnpm] )); then
   eval "$(pnpm completion zsh)"
 fi
 
+# chezmoi
+if (( $+commands[chezmoi] )); then
+  eval "$(chezmoi completion zsh)"
+fi
 
 # uv
 if (( $+commands[uv] )); then

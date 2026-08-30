@@ -22,4 +22,5 @@ completion_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
 mkdir -p "$completion_dir"
 
 log_info 'Generating Deno Zsh completions...'
-"$deno" completions zsh >"$completion_dir/_deno"
+"$deno" completions zsh |
+    sed -E 's/\{([[:alnum:]]),--/\{-\1,--/g' >"$completion_dir/_deno"
