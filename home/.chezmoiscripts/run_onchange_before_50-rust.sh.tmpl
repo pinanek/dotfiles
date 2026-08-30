@@ -22,3 +22,9 @@ else
     log_info 'Installing rust-analyzer...'
     "$rustup" component add rust-analyzer
 fi
+
+completion_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
+mkdir -p "$completion_dir"
+
+log_info 'Generating Cargo Zsh completions...'
+"$rustup" completions zsh cargo >"$completion_dir/_cargo"

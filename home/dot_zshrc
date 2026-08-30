@@ -151,6 +151,41 @@ if (( $+commands[chezmoi] )); then
   eval "$(chezmoi completion zsh)"
 fi
 
+# GitHub CLI
+if (( $+commands[gh] )); then
+  eval "$(gh completion -s zsh)"
+fi
+
+# delta
+if (( $+commands[delta] )); then
+  eval "$(delta --generate-completion zsh)"
+fi
+
+# just
+if (( $+commands[just] )); then
+  eval "$(just --completions zsh)"
+fi
+
+# Rust
+if (( $+commands[rustup] )); then
+  eval "$(rustup completions zsh rustup)"
+fi
+
+# ripgrep
+if (( $+commands[rg] )); then
+  eval "$(rg --generate complete-zsh)"
+fi
+
+# fd
+if (( $+commands[fd] )); then
+  eval "$(fd --gen-completions zsh)"
+fi
+
+# Ruff
+if (( $+commands[ruff] )); then
+  eval "$(ruff generate-shell-completion zsh)"
+fi
+
 # uv
 if (( $+commands[uv] )); then
   eval "$(uv generate-shell-completion zsh)"
