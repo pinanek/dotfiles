@@ -1,6 +1,6 @@
 mattmc3/ez-compinit
 zsh-users/zsh-completions kind:fpath path:src
-zsh-users/zsh-autosuggestions
+Giammarco-Ferranti/deja
 Aloxaf/fzf-tab
 olets/zsh-abbr
 romkatv/zsh-bench kind:path

@@ -49,6 +49,9 @@ fi
 
 # ── Plugins ──────────────────────────────────────────────────
 
+# Keep Tab available for zsh/fzf-tab completion instead of Deja's alternatives picker.
+export DEJA_CYCLE_KEY=
+
 antidote_dir="${XDG_DATA_HOME:-$HOME/.local/share}/antidote"
 antidote_sh="$antidote_dir/antidote.zsh"
 
