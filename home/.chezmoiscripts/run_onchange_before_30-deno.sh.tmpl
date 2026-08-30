@@ -17,3 +17,9 @@ if [[ ! -x "$deno" ]]; then
     log_warning "Deno installation completed without creating $deno."
     exit 1
 fi
+
+completion_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/completions"
+mkdir -p "$completion_dir"
+
+log_info 'Generating Deno Zsh completions...'
+"$deno" completions zsh >"$completion_dir/_deno"
