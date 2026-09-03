@@ -162,12 +162,6 @@ update_isl_server_packages() {
     run_update_step 'Updating Debian package metadata' "${apt_get[@]}" update
     run_update_step 'Upgrading Debian packages' "${apt_get[@]}" upgrade --yes
 
-    if command -v bin >/dev/null 2>&1; then
-        install_missing_bin_tools
-        run_update_step 'Updating bin-managed tools' bin update
-    else
-        log 'Skipping bin: command not found.'
-    fi
 
     if command -v uv >/dev/null 2>&1; then
         run_update_step 'Updating uv' uv self update
@@ -176,6 +170,21 @@ update_isl_server_packages() {
     else
         log 'Skipping uv: command not found.'
     fi
+}
+
+update_bin_tools() {
+    local profile=$1
+
+    if ! command -v bin >/dev/null 2>&1; then
+        log 'Skipping bin: command not found.'
+        return
+    fi
+
+    if [[ "$profile" == 'isl-server' ]]; then
+        install_missing_bin_tools
+    fi
+
+    run_update_step 'Updating bin-managed tools' bin update
 }
 
 update_pinamac_packages() {
@@ -206,6 +215,7 @@ update_packages() {
         *) fail "unsupported chezmoi profile: $profile" ;;
     esac
 
+    update_bin_tools "$profile"
     update_pnpm_packages
     update_node
     update_deno
