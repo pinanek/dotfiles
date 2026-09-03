@@ -5,4 +5,5 @@ github.com/astral-sh/ruff ruff ruff-x86_64-unknown-linux-gnu.tar.gz/ruff
 github.com/dprint/dprint dprint dprint-x86_64-unknown-linux-gnu.zip/dprint
 github.com/Giammarco-Ferranti/deja deja deja_*_linux_amd64.tar.gz/deja
 github.com/tombi-toml/tombi tombi tombi-cli-*-x86_64-unknown-linux-musl.tar.gz/tombi
+github.com/terror/just-lsp just-lsp just-lsp-*-x86_64-unknown-linux-musl.tar.gz/just-lsp
 github.com/casey/just just just-*-x86_64-unknown-linux-musl.tar.gz/just

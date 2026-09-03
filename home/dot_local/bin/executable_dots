@@ -17,13 +17,16 @@ require_command() {
     command -v "$1" >/dev/null 2>&1 || fail "required command not found: $1"
 }
 
-copy_theme() {
-    local source=$1
-    local destination=$2
+copy_themes() {
+    local source
+    local destination
 
-    [[ -f "$catppina_dir/dist/$source" ]] || fail "theme asset not found: $source"
-    mkdir -p "$(dirname "$source_dir/$destination")"
-    install -m 0644 "$catppina_dir/dist/$source" "$source_dir/$destination"
+    while read -r source destination; do
+        [[ -n "$source" && "$source" != \#* && -n "$destination" ]] || continue
+        [[ -f "$catppina_dir/dist/$source" ]] || fail "theme asset not found: $source"
+        mkdir -p "$(dirname "$source_dir/$destination")"
+        install -m 0644 "$catppina_dir/dist/$source" "$source_dir/$destination"
+    done
 }
 
 run_update_step() {
@@ -49,6 +52,31 @@ update_pnpm_packages() {
 }
 
 update_fnm() {
+    local installed_version
+    local latest_version
+    local release
+
+    installed_version=$(fnm --version)
+    installed_version=${installed_version#fnm }
+
+    if ! release=$(curl -fsSL https://api.github.com/repos/Schniz/fnm/releases/latest); then
+        log 'Skipping fnm update: unable to fetch the latest release.'
+        return
+    fi
+
+    latest_version=$(printf '%s\n' "$release" |
+        sed -nE 's/^[[:space:]]*"tag_name":[[:space:]]*"v?([^"]+)".*/\1/p')
+    if [[ -z "$latest_version" ]]; then
+        log 'Skipping fnm update: latest release has no version tag.'
+        return
+    fi
+
+    if [[ "$installed_version" == "$latest_version" ]]; then
+        log "fnm $installed_version is already the latest version."
+        return
+    fi
+
+    log "Updating fnm from $installed_version to $latest_version..."
     curl -fsSL https://fnm.vercel.app/install |
         bash -s -- --install-dir "$HOME/.local/bin" --skip-shell --force-install
 }
@@ -82,6 +110,57 @@ update_rust() {
     fi
 }
 
+update_helix() {
+    local helix_source="${XDG_DATA_HOME:-$HOME/.local/share}/helix/source"
+    local cargo="$HOME/.cargo/bin/cargo"
+    local hx="$HOME/.cargo/bin/hx"
+    local remote_branch
+    local current_commit
+    local latest_commit
+
+    if [[ ! -d "$helix_source/.git" ]]; then
+        log 'Skipping Helix: source checkout not found.'
+        return
+    fi
+
+    if [[ ! -x "$cargo" ]]; then
+        log 'Skipping Helix: cargo not found.'
+        return
+    fi
+
+    if [[ -n "$(git -C "$helix_source" status --porcelain)" ]]; then
+        log 'Skipping Helix: source checkout has local changes.'
+        return
+    fi
+
+    git -C "$helix_source" fetch --quiet origin
+    remote_branch=$(git -C "$helix_source" symbolic-ref --quiet --short refs/remotes/origin/HEAD) || {
+        printf 'Unable to determine Helix upstream branch.\n' >&2
+        return 1
+    }
+    current_commit=$(git -C "$helix_source" rev-parse HEAD)
+    latest_commit=$(git -C "$helix_source" rev-parse "$remote_branch")
+
+    if [[ "$current_commit" == "$latest_commit" && -x "$hx" ]]; then
+        log 'Helix is already at the latest commit.'
+        return
+    fi
+
+    if [[ "$current_commit" != "$latest_commit" ]]; then
+        log 'Updating Helix source...'
+        git -C "$helix_source" merge --ff-only "$remote_branch"
+    else
+        log 'Helix binary is missing; building the current source...'
+    fi
+
+    log 'Building and installing Helix...'
+    (
+        cd "$helix_source"
+        env HELIX_DEFAULT_RUNTIME="$helix_source/runtime" \
+            "$cargo" install --path helix-term --locked --force
+    )
+}
+
 update_cargo_tools() {
     local source_dir
     local manifest
@@ -108,15 +187,13 @@ update_cargo_tools() {
 }
 
 install_missing_bin_tools() {
-    local source_dir
     local manifest
     local source
     local executable
     local asset_pattern
+    local destination
 
-    source_dir=$(chezmoi source-path)
-    manifest="$source_dir/.chezmoitemplates/isl-server.bin"
-
+    manifest="$(chezmoi source-path)/.chezmoitemplates/isl-server.bin"
     if [[ ! -r "$manifest" ]]; then
         log "Skipping bin manifest: not found at $manifest."
         return
@@ -125,18 +202,16 @@ install_missing_bin_tools() {
     mkdir -p "$HOME/.local/bin"
 
     while read -r source executable asset_pattern; do
-        [[ -n "$source" && -n "$executable" ]] || continue
-
-        if [[ -x "$HOME/.local/bin/$executable" ]]; then
-            continue
-        fi
+        [[ -n "$source" && "$source" != \#* && -n "$executable" ]] || continue
+        destination="$HOME/.local/bin/$executable"
+        [[ -x "$destination" ]] && continue
 
         if [[ -n "$asset_pattern" ]]; then
             run_update_step "Installing $executable with bin" \
-                bin install --name "$asset_pattern" "$source" "$HOME/.local/bin/$executable"
+                bin install --name "$asset_pattern" "$source" "$destination"
         else
             run_update_step "Installing $executable with bin" \
-                bin install "$source" "$HOME/.local/bin/$executable"
+                bin install "$source" "$destination"
         fi
     done < "$manifest"
 }
@@ -220,6 +295,7 @@ update_packages() {
     update_node
     update_deno
     update_rust
+    run_update_step 'Updating Helix' update_helix
     update_cargo_tools
 
     if (( ${#failed_updates[@]} )); then
@@ -252,20 +328,24 @@ pull_themes() {
     fi
 
     log 'copying shared themes into chezmoi source state...'
-    copy_theme btop/catppina_dark.theme dot_config/btop/themes/catppina_dark.theme
-    copy_theme delta/catppina_dark.gitconfig dot_config/delta/catppina_dark.gitconfig
-    copy_theme fzf/catppina_dark.sh dot_config/fzf/themes/catppina_dark.zsh
-    copy_theme gitui/catppina_dark.ron dot_config/gitui/theme.ron
-    copy_theme helix/catppina_dark.toml dot_config/helix/themes/catppina_dark.toml
-    copy_theme helix/catppina_light.toml dot_config/helix/themes/catppina_light.toml
-    copy_theme posting/catppina_dark.yaml dot_local/share/posting/themes/catppina_dark.yaml
-    copy_theme yazi/catppina_dark.toml dot_config/yazi/theme.toml
+    copy_themes <<'THEMES'
+btop/catppina_dark.theme dot_config/btop/themes/catppina_dark.theme
+delta/catppina_dark.gitconfig dot_config/delta/catppina_dark.gitconfig
+fzf/catppina_dark.sh dot_config/fzf/themes/catppina_dark.zsh
+gitui/catppina_dark.ron dot_config/gitui/theme.ron
+helix/catppina_dark.toml dot_config/helix/themes/catppina_dark.toml
+helix/catppina_light.toml dot_config/helix/themes/catppina_light.toml
+posting/catppina_dark.yaml dot_local/share/posting/themes/catppina_dark.yaml
+yazi/catppina_dark.toml dot_config/yazi/theme.toml
+THEMES
 
     if [[ "$profile" == 'pinamac' ]]; then
         log 'copying PinaMac themes into chezmoi source state...'
-        copy_theme ghostty/catppina_dark.conf dot_config/ghostty/themes/catppina_dark
-        copy_theme zed/catppina_dark.json dot_config/zed/themes/catppina_dark.json
-        copy_theme zed/catppina_light.json dot_config/zed/themes/catppina_light.json
+        copy_themes <<'THEMES'
+ghostty/catppina_dark.conf dot_config/ghostty/themes/catppina_dark
+zed/catppina_dark.json dot_config/zed/themes/catppina_dark.json
+zed/catppina_light.json dot_config/zed/themes/catppina_light.json
+THEMES
     fi
 
     log 'applying updated source state...'
