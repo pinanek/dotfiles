@@ -7,4 +7,5 @@ ffmpeg
 file
 git
 git-lfs
+unzip
 zsh
