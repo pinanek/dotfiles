@@ -57,7 +57,7 @@ cask "telegram", args: { adopt: true }
 cask "tor-browser", args: { adopt: true }
 cask "transmission", args: { adopt: true }
 cask "zed@preview", args: { adopt: true }
-cask "zen-browser"
+cask "zen"
 
 # Mac App Store
 mas "Camera Preview", id: 1632827132
