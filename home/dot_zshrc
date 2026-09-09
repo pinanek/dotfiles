@@ -3,6 +3,7 @@
 # Defaults
 export SHELL="${SHELL:-$(command -v zsh)}"
 export EDITOR="${EDITOR:-$(command -v hx)}"
+export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
 
 # ── PATH ─────────────────────────────────────────────────────
 
