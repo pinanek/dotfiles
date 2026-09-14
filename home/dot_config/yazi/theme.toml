@@ -82,7 +82,8 @@ title   = {}
 hovered = { fg = "#e99cba", bold = true }
 
 [which]
-mask            = { bg = "#212122" }
+border          = { fg = "#9ccfe9" }
+mask            = {}
 cand            = { fg = "#7ecebe" }
 rest            = { fg = "#939394" }
 desc            = { fg = "#e99cba" }
@@ -90,11 +91,10 @@ separator       = "  "
 separator_style = { fg = "#434344" }
 
 [help]
-on      = { fg = "#7ecebe" }
-run     = { fg = "#e99cba" }
-desc    = { fg = "#939394" }
+border  = { fg = "#9ccfe9" }
+chord   = { fg = "#7ecebe" }
+action  = { fg = "#939394" }
 hovered = { bg = "#434344", bold = true }
-footer  = { fg = "#c3c3c4", bg = "#323233" }
 
 [notify]
 title_info  = { fg = "#7ecebe" }
@@ -104,14 +104,14 @@ title_error = { fg = "#f88d8e" }
 [filetype]
 rules = [
 	# Media
-	{ mime = "image/*", fg = "#e9cc9c" },
-	{ mime = "{audio,video}/*", fg = "#e99cba" },
+	{ mime = "**/image/*", fg = "#e9cc9c" },
+	{ mime = "**/{audio,video}/*", fg = "#e99cba" },
 
 	# Archives
-	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#f88d8e" },
+	{ mime = "**/application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#f88d8e" },
 
 	# Documents
-	{ mime = "application/{pdf,doc,rtf}", fg = "#8fc9e6" },
+	{ mime = "**/application/{pdf,doc,rtf}", fg = "#8fc9e6" },
 
 	# Virtual file system
 	{ mime = "vfs/{absent,stale}", fg = "#323233" },

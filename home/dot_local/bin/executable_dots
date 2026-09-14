@@ -242,6 +242,7 @@ update_isl_server_packages() {
         run_update_step 'Updating uv' uv self update
         run_update_step 'Upgrading uv tools' uv tool upgrade --all
         run_update_step 'Upgrading uv-managed Python versions' uv python upgrade
+        run_update_step 'Setting the default uv Python' uv python install --default
     else
         log 'Skipping uv: command not found.'
     fi

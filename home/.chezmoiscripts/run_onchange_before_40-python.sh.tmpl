@@ -16,11 +16,9 @@ else
         env UV_INSTALL_DIR="$local_bin" UV_NO_MODIFY_PATH=1 sh
 fi
 
-python_dir=$("$uv" python dir)
-if [[ -d "$python_dir" ]] &&
-    find "$python_dir" -mindepth 1 -maxdepth 1 -type d -print -quit | grep -q .; then
-    log_info 'A uv-managed Python is already installed.'
+if [[ -x "$local_bin/python3" ]]; then
+    log_info 'A default Python is already installed.'
 else
-    log_info 'Installing latest Python...'
-    "$uv" python install
+    log_info 'Installing the latest Python as the default...'
+    "$uv" python install --default
 fi
