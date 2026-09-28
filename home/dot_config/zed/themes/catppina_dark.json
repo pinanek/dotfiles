@@ -517,7 +517,7 @@
             "font_weight": null
           },
           "punctuation.special.symbol": {
-            "color": "#f88d8e",
+            "color": "#ffafaf",
             "font_style": null,
             "font_weight": null
           },
@@ -567,7 +567,7 @@
             "font_weight": null
           },
           "string.special.symbol": {
-            "color": "#f88d8e",
+            "color": "#ffafaf",
             "font_style": null,
             "font_weight": null
           },
@@ -577,7 +577,7 @@
             "font_weight": null
           },
           "symbol": {
-            "color": "#f88d8e",
+            "color": "#ffafaf",
             "font_style": null,
             "font_weight": null
           },
@@ -598,11 +598,6 @@
           },
           "tag.doctype": {
             "color": "#b5ccff",
-            "font_style": null,
-            "font_weight": null
-          },
-          "text": {
-            "color": "#c3c3c4",
             "font_style": null,
             "font_weight": null
           },
