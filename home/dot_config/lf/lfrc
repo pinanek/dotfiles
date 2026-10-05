@@ -1,0 +1,67 @@
+set hidden true
+set period 1
+
+# Navigation
+map h updir
+map j down
+map k up
+map l open
+
+map gg top
+map ge bottom
+
+# Quit
+map q quit
+
+# Selection
+map <space> mark
+map u unmark
+map U unmark-all
+
+# File operations
+map y copy
+
+cmd copy-path %{{
+    printf "%s" "$fx" | pbcopy
+}}
+map Y copy-path
+
+map x cut
+map p paste
+map d delete
+map r rename
+
+# Create file / directory
+cmd touch %{{
+    printf "File name: "
+    read name
+    [ -n "$name" ] && touch "$name"
+}}
+map a touch
+
+cmd mkdir %{{
+    printf "Directory name: "
+    read name
+    [ -n "$name" ] && mkdir -p "$name"
+}}
+map A mkdir
+
+# Open shell
+map $ shell
+
+# Reload directory
+map R reload
+
+# Hidden files
+map . set hidden!
+
+# Search
+map / search
+map n search-next
+map N search-prev
+
+# Info
+map i $file "$f"
+
+# Editor
+# map <enter> $$EDITOR "$f"

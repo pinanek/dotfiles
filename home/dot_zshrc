@@ -1,9 +1,14 @@
 # ── Environment ──────────────────────────────────────────────
 
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # Defaults
 export SHELL="${SHELL:-$(command -v zsh)}"
-export EDITOR="${EDITOR:-$(command -v hx)}"
+export EDITOR="${EDITOR:-$(command -v ms)}"
 export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
+export MITOS_RUNTIME="$XDG_DATA_HOME/mitos/source/runtime"
 
 # ── PATH ─────────────────────────────────────────────────────
 
@@ -116,8 +121,9 @@ zstyle ':prompt:pure:git:stash' show yes
 
 prompt pure
 
-# Add the zmx session name before Pure's prompt.
-PROMPT="%F{7}${ZMX_SESSION:+[$ZMX_SESSION] }%f$PROMPT"
+if [[ -n $ZMX_SESSION ]]; then
+  export PS1="[$ZMX_SESSION] ${PS1}"
+fi
 
 # ── FZF ──────────────────────────────────────────────────────
 

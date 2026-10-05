@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+cargo="$HOME/.cargo/bin/cargo"
+ms="$HOME/.cargo/bin/ms"
+mitos_source="${XDG_DATA_HOME:-$HOME/.local/share}/mitos/source"
+
+if [[ -x "$ms" ]]; then
+    log_info 'Mitos is already installed.'
+    exit 0
+fi
+
+if [[ -d "$mitos_source/.git" ]]; then
+    log_info 'Updating Mitos source...'
+    git -C "$mitos_source" pull --ff-only
+elif [[ -e "$mitos_source" ]]; then
+    log_warning "Cannot install Mitos: $mitos_source exists but is not a Git checkout."
+    exit 1
+else
+    log_info 'Cloning Mitos source...'
+    mkdir -p "$(dirname "$mitos_source")"
+    git clone https://github.com/mitos-editor/mitos "$mitos_source"
+fi
+
+log_info 'Building and installing Mitos...'
+env MITOS_DEFAULT_RUNTIME="$mitos_source/runtime" \
+    "$cargo" install \
+    --profile opt \
+    --config 'build.rustflags=["-C", "target-cpu=native"]' \
+    --path "$mitos_source/crates/term" \
+    --locked \
+    --force
+
+log_info 'Validating Mitos installation...'
+"$ms" --health

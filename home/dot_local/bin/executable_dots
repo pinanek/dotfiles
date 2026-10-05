@@ -161,6 +161,59 @@ update_helix() {
     )
 }
 
+update_mitos() {
+    local mitos_source="${XDG_DATA_HOME:-$HOME/.local/share}/mitos/source"
+    local cargo="$HOME/.cargo/bin/cargo"
+    local ms="$HOME/.cargo/bin/ms"
+    local remote_branch
+    local current_commit
+    local latest_commit
+
+    if [[ ! -d "$mitos_source/.git" ]]; then
+        log 'Skipping Mitos: source checkout not found.'
+        return
+    fi
+
+    if [[ ! -x "$cargo" ]]; then
+        log 'Skipping Mitos: cargo not found.'
+        return
+    fi
+
+    if [[ -n "$(git -C "$mitos_source" status --porcelain)" ]]; then
+        log 'Skipping Mitos: source checkout has local changes.'
+        return
+    fi
+
+    git -C "$mitos_source" fetch --quiet origin
+    remote_branch=$(git -C "$mitos_source" symbolic-ref --quiet --short refs/remotes/origin/HEAD) || {
+        printf 'Unable to determine Mitos upstream branch.\n' >&2
+        return 1
+    }
+    current_commit=$(git -C "$mitos_source" rev-parse HEAD)
+    latest_commit=$(git -C "$mitos_source" rev-parse "$remote_branch")
+
+    if [[ "$current_commit" == "$latest_commit" && -x "$ms" ]]; then
+        log 'Mitos is already at the latest commit.'
+        return
+    fi
+
+    if [[ "$current_commit" != "$latest_commit" ]]; then
+        log 'Updating Mitos source...'
+        git -C "$mitos_source" merge --ff-only "$remote_branch"
+    else
+        log 'Mitos binary is missing; building the current source...'
+    fi
+
+    log 'Building and installing Mitos...'
+    env MITOS_DEFAULT_RUNTIME="$mitos_source/runtime" \
+        "$cargo" install \
+        --profile opt \
+        --config 'build.rustflags=["-C", "target-cpu=native"]' \
+        --path "$mitos_source/crates/term" \
+        --locked \
+        --force
+}
+
 update_cargo_tools() {
     local source_dir
     local manifest
@@ -297,6 +350,7 @@ update_packages() {
     update_deno
     update_rust
     run_update_step 'Updating Helix' update_helix
+    run_update_step 'Updating Mitos' update_mitos
     update_cargo_tools
 
     if (( ${#failed_updates[@]} )); then

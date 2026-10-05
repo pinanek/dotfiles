@@ -1,0 +1,5 @@
+{
+  "theme": "ansi",
+  "system_prompt_append": "@~/.config/agents/APPEND_SYSTEM_PROMPT.md",
+  "display_width": "terminal"
+}

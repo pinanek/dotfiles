@@ -38,6 +38,19 @@ copy-on-select = false
 
 notify-on-command-finish = unfocused
 
+tab-inherit-working-directory = true
+
 # ── Keybind ────────────────────────────────────────────────────────────
 keybind = alt+backspace=text:\x1b\x7f
 keybind = shift+enter=text:\n
+
+keybind = super+shift+l=new_split:right
+keybind = super+shift+h=new_split:left
+keybind = super+shift+j=new_split:down
+keybind = super+shift+k=new_split:up
+keybind = super+shift+enter=new_split:auto
+
+keybind = super+alt+l=goto_split:right
+keybind = super+alt+h=goto_split:left
+keybind = super+alt+j=goto_split:down
+keybind = super+alt+k=goto_split:up
