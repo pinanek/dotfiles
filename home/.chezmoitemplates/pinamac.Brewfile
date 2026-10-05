@@ -1,5 +1,3 @@
-tap "mutagen-io/mutagen"
-
 # Formulae
 brew "asciinema"
 brew "autossh"
@@ -23,7 +21,6 @@ brew "lazysql"
 brew "lf"
 brew "mas"
 brew "miniserve"
-brew "mutagen"
 brew "posting"
 brew "ripgrep"
 brew "scooter"

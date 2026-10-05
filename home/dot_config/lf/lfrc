@@ -46,9 +46,6 @@ cmd mkdir %{{
 }}
 map A mkdir
 
-# Open shell
-map $ shell
-
 # Reload directory
 map R reload
 

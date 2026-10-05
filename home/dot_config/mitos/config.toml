@@ -66,9 +66,6 @@ tabpad = "·"
 "`" = "`"
 "<" = ">"
 
-[editor.spelling]
-languages = ["en_US"]
-
 [keys.normal]
 A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 A-k = [
