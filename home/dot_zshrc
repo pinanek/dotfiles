@@ -75,6 +75,8 @@ if [[ ! -r "$antidote_sh" ]]; then
 fi
 
 if [[ -r "$antidote_sh" ]]; then
+  source "$antidote_sh"
+
   if [[
     ! -f "$plugins_zsh" ||
     "$plugins_zsh" -ot "$plugins_txt"
@@ -82,7 +84,6 @@ if [[ -r "$antidote_sh" ]]; then
     mkdir -p "${plugins_zsh:h}"
 
     (
-      source "$antidote_sh"
       antidote bundle < "$plugins_txt" >| "$plugins_zsh"
     )
   fi

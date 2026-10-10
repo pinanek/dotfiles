@@ -1,9 +1,7 @@
 theme = catppina_dark
 
 # ── Font ──────────────────────────────────────────────────────────────
-
 font-family = JetBrains Mono
-
 font-size = 14
 font-thicken = true
 font-thicken-strength = 0
@@ -16,7 +14,6 @@ font-style-bold-italic = Bold Italic
 font-synthetic-style = false
 
 # ── Window ────────────────────────────────────────────────────────────
-
 window-title-font-family = JetBrains Mono
 
 maximize = true
@@ -25,22 +22,22 @@ window-padding-x = 10
 window-padding-y = 5
 
 # ── MacOS stuff ───────────────────────────────────────────────────────
-
-macos-titlebar-style = transparent
+macos-titlebar-style = tabs
 macos-option-as-alt = true
 macos-icon = official
 
 # ── Other ─────────────────────────────────────────────────────────────
-
 term = xterm-ghostty
 shell-integration-features = ssh-terminfo,ssh-env,sudo,no-cursor
+auto-update-channel = tip
+
+# ── Behavior ──────────────────────────────────────────────────────────
+notify-on-command-finish = unfocused
+tab-inherit-working-directory = true
+window-save-state = default
 copy-on-select = false
 
-notify-on-command-finish = unfocused
-
-tab-inherit-working-directory = true
-
-# ── Keybind ────────────────────────────────────────────────────────────
+# ── Keybind ───────────────────────────────────────────────────────────
 keybind = alt+backspace=text:\x1b\x7f
 keybind = shift+enter=text:\n
 

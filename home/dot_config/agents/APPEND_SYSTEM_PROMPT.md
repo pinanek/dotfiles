@@ -6,4 +6,5 @@
 - Prefer simple, self-explanatory solutions over clever or overly abstract ones.
 - When making technical decisions, prioritize quality, simplicity, robustness, scalability, and long-term maintainability.
 - Avoid unnecessary complexity, premature abstraction, and speculative work.
-- Prefer code and designs that are easy to understand without excessive comments or documentation. Use empty lines to separate logical sections of code and improve readability.
+- Prefer code and designs that are easy to understand without excessive comments or documentation.
+- Add blank lines between logical blocks or groups of code to improve readability.
