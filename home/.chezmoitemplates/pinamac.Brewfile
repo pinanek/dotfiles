@@ -49,13 +49,12 @@ cask "keka", args: { adopt: true }
 cask "kekaexternalhelper", args: { adopt: true }
 cask "mac-mouse-fix", args: { adopt: true }
 cask "obs", args: { adopt: true }
-cask "pearcleaner", args: { adopt: true }
+cask "jithin-sabu/tap/purge", args: { adopt: true }
 cask "tablepro", args: { adopt: true }
 cask "telegram", args: { adopt: true }
 cask "tor-browser", args: { adopt: true }
 cask "transmission", args: { adopt: true }
 cask "zed@preview", args: { adopt: true }
-cask "zen"
 
 # Mac App Store
 mas "Camera Preview", id: 1632827132
