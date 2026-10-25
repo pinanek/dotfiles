@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+go_root="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+
+if [[ -x "$go_root/bin/go" ]]; then
+    log_info 'Go is already installed.'
+    exit 0
+fi
+
+if [[ -e "$go_root" ]]; then
+    log_warning "Cannot install Go: $go_root already exists without a Go executable."
+    exit 1
+fi
+
+case "$(uname -s)" in
+    Darwin) os='darwin' ;;
+    Linux) os='linux' ;;
+    *)
+        log_warning "Cannot install Go: unsupported operating system $(uname -s)."
+        exit 1
+        ;;
+esac
+
+case "$(uname -m)" in
+    x86_64 | amd64) architecture='amd64' ;;
+    arm64 | aarch64) architecture='arm64' ;;
+    *)
+        log_warning "Cannot install Go: unsupported architecture $(uname -m)."
+        exit 1
+        ;;
+esac
+
+log_info 'Finding the latest stable Go release...'
+version=$(curl -fsSL 'https://go.dev/VERSION?m=text' | sed -n '1p')
+
+if [[ ! "$version" =~ ^go[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+    log_warning 'Cannot install Go: the latest stable release version could not be determined.'
+    exit 1
+fi
+
+temporary_dir=$(mktemp -d "${TMPDIR:-/tmp}/go-bootstrap.XXXXXX")
+trap 'rm -rf "$temporary_dir"' EXIT
+
+log_info "Downloading $version for $os-$architecture..."
+curl -fsSL --retry 3 "https://go.dev/dl/$version.$os-$architecture.tar.gz" \
+    -o "$temporary_dir/go.tar.gz"
+
+tar -tzf "$temporary_dir/go.tar.gz" >/dev/null
+tar -xzf "$temporary_dir/go.tar.gz" -C "$temporary_dir"
+
+log_info "Installing Go into $go_root..."
+mkdir -p "$(dirname "$go_root")"
+mv "$temporary_dir/go" "$go_root"
+
+log_info 'Validating Go installation...'
+"$go_root/bin/go" version

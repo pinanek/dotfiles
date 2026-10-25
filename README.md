@@ -59,6 +59,27 @@ home/
 └── dot_zshrc             # Managed ~/.zshrc
 ```
 
+## Dots CLI
+
+```sh
+dots update                  # Update all packages for the active profile
+dots update system           # Homebrew/MAS or APT only
+dots update node             # fnm and Node.js LTS
+dots update rust             # Rust toolchains and Cargo tools
+dots update editors          # Helix and Mitos
+dots update tools            # bin, pnpm, and uv tools/Python
+
+dots theme update           # Sync Catppina themes and apply dotfiles
+
+dots diff                    # Preview managed-file changes
+dots apply                   # Apply dotfiles, including bootstrap scripts
+dots pull                    # Fast-forward from origin main without applying dotfiles
+dots push                    # Commit all changes as "chore: update" and push to origin main
+
+dots completion zsh          # Generate Zsh completion
+dots help                    # Show commands and active profile
+```
+
 ## Local configuration
 
 Keep machine-specific settings in unmanaged local files:

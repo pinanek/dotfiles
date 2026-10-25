@@ -22,6 +22,8 @@ path=(
   "$XDG_BIN_HOME"
   "$HOME/.cargo/bin"
   "$HOME/.deno/bin"
+  "$XDG_DATA_HOME/go/bin"
+  "${GOPATH:-$HOME/go}/bin"
   "$PNPM_HOME/bin"
   $path
 )
@@ -55,7 +57,7 @@ fi
 
 # ── Plugins ──────────────────────────────────────────────────
 
-# Keep Tab available for zsh/fzf-tab completion instead of Deja's alternatives picker.
+# Leave Tab for fzf-tab; Deja reapplies its bindings before every prompt.
 export DEJA_CYCLE_KEY=
 
 antidote_dir="${XDG_DATA_HOME:-$HOME/.local/share}/antidote"
@@ -107,7 +109,7 @@ fpath=("$deno_completion_dir" $fpath)
 
 # Dots
 if (( $+commands[dots] && $+functions[compdef] )); then
-  eval "$(dots completions zsh)"
+  eval "$(dots completion zsh)"
 fi
 
 autoload -Uz compinit
@@ -142,6 +144,11 @@ if (( $+commands[fzf] )); then
   FZF_ALT_C_COMMAND= \
   FZF_CTRL_T_COMMAND= \
     eval "$(fzf --zsh)"
+fi
+
+if (( $+functions[fzf-tab-complete] )); then
+  bindkey -M emacs '^I' fzf-tab-complete
+  bindkey -M viins '^I' fzf-tab-complete
 fi
 
 # ── Shell Integrations ───────────────────────────────────────
