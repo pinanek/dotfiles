@@ -61,4 +61,4 @@ map N search-prev
 map i $file "$f"
 
 # Editor
-# map <enter> $$EDITOR "$f"
+cmd open $$EDITOR "$f"
