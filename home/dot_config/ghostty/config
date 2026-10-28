@@ -21,6 +21,8 @@ maximize = true
 window-padding-x = 10
 window-padding-y = 5
 
+window-colorspace = display-p3
+
 # ── MacOS stuff ───────────────────────────────────────────────────────
 macos-titlebar-style = tabs
 macos-option-as-alt = true
@@ -29,7 +31,7 @@ macos-icon = official
 # ── Other ─────────────────────────────────────────────────────────────
 term = xterm-ghostty
 shell-integration-features = ssh-terminfo,ssh-env,sudo,no-cursor
-auto-update-channel = tip
+auto-update-channel = stable
 
 # ── Behavior ──────────────────────────────────────────────────────────
 notify-on-command-finish = unfocused
@@ -45,7 +47,6 @@ keybind = super+shift+l=new_split:right
 keybind = super+shift+h=new_split:left
 keybind = super+shift+j=new_split:down
 keybind = super+shift+k=new_split:up
-keybind = super+shift+enter=new_split:auto
 
 keybind = super+alt+l=goto_split:right
 keybind = super+alt+h=goto_split:left

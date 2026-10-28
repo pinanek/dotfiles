@@ -6,6 +6,7 @@ map h updir
 map j down
 map k up
 map l open
+map <enter> open
 
 map gg top
 map ge bottom

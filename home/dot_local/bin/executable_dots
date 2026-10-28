@@ -303,6 +303,23 @@ update_uv_tools() {
     fi
 }
 
+update_hax_web() {
+    local hax_web_source="${XDG_DATA_HOME:-$HOME/.local/share}/hax-web"
+
+    if [[ ! -d "$hax_web_source/.git" ]]; then
+        log 'Skipping hax-web: source checkout not found.'
+        return
+    fi
+
+    if [[ -n "$(git -C "$hax_web_source" status --porcelain)" ]]; then
+        log 'Skipping hax-web: source checkout has local changes.'
+        return
+    fi
+
+    git -C "$hax_web_source" pull --ff-only || return
+    "$hax_web_source/install.sh"
+}
+
 update_bin_tools() {
     local profile=$1
 
@@ -364,6 +381,7 @@ update_packages() {
         update_bin_tools "$profile"
         update_pnpm_packages
         update_uv_tools
+        run_update_step 'Updating hax-web' update_hax_web
     fi
 
     if [[ "$target" == all || "$target" == node ]]; then
@@ -418,6 +436,8 @@ btop/catppina_dark.theme dot_config/btop/themes/catppina_dark.theme
 delta/catppina_dark.gitconfig dot_config/delta/catppina_dark.gitconfig
 fzf/catppina_dark.sh dot_config/fzf/themes/catppina_dark.zsh
 gitui/catppina_dark.ron dot_config/gitui/theme.ron
+glamour/catppina_dark.json dot_config/glow/catppina_dark.json
+glamour/catppina_light.json dot_config/glow/catppina_light.json
 helix/catppina_dark.toml dot_config/helix/themes/catppina_dark.toml
 helix/catppina_light.toml dot_config/helix/themes/catppina_light.toml
 posting/catppina_dark.yaml dot_local/share/posting/themes/catppina_dark.yaml

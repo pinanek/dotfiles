@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+hax_web_source="${XDG_DATA_HOME:-$HOME/.local/share}/hax-web"
+
+if [[ -d "$hax_web_source/.git" ]]; then
+    log_info 'hax-web source is already installed.'
+elif [[ -e "$hax_web_source" ]]; then
+    log_warning "Cannot install hax-web: $hax_web_source exists but is not a Git checkout."
+    exit 1
+else
+    log_info 'Cloning hax-web source...'
+    mkdir -p "$(dirname "$hax_web_source")"
+    git clone https://github.com/OleksandrChekhovskyi/hax-web "$hax_web_source"
+fi
+
+log_info 'Installing hax-web and its web skill...'
+"$hax_web_source/install.sh"
