@@ -65,6 +65,7 @@ home/
 dots update                  # Update all packages for the active profile
 dots update system           # Homebrew/MAS or APT only
 dots update node             # fnm and Node.js LTS
+dots update zig              # zvm, stable Zig, and matching ZLS (without switching)
 dots update rust             # Rust toolchains and Cargo tools
 dots update editors          # Helix and Mitos
 dots update tools            # bin, pnpm, and uv tools/Python

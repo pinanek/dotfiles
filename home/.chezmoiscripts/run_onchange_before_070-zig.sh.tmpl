@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+{{ template "logging.sh" . }}
+
+export ZVM_INSTALL="$HOME/.zvm/self"
+zvm="$ZVM_INSTALL/zvm"
+zvm_bin="${ZVM_PATH:-$HOME/.zvm}/bin"
+
+if [[ -x "$zvm" ]]; then
+    log_info 'zvm is already installed.'
+else
+    log_info 'Installing zvm...'
+    curl -fsSL https://www.zvm.app/install.sh | bash -s -- --no-env
+fi
+
+if [[ -x "$zvm_bin/zig" && -x "$zvm_bin/zls" ]]; then
+    log_info 'Zig and ZLS are already installed.'
+elif [[ -x "$zvm_bin/zig" ]]; then
+    log_info 'Installing matching ZLS for the current Zig version...'
+    "$zvm" install --skip-use --zls "$("$zvm_bin/zig" version)"
+else
+    log_info 'Installing stable Zig and matching ZLS...'
+    "$zvm" install --zls stable
+fi

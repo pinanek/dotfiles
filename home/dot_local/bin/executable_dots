@@ -91,6 +91,16 @@ update_node() {
     fi
 }
 
+update_zig() {
+    if command -v zvm >/dev/null 2>&1; then
+        run_update_step 'Updating zvm' zvm upgrade
+        run_update_step 'Installing stable Zig and matching ZLS without switching' \
+            zvm install --skip-use --zls stable
+    else
+        log 'Skipping Zig: zvm not found.'
+    fi
+}
+
 update_deno() {
     local deno="$HOME/.deno/bin/deno"
 
@@ -356,7 +366,7 @@ update_packages() {
     local profile
 
     case "$target" in
-        all | system | node | rust | editors | tools) ;;
+        all | system | node | zig | rust | editors | tools) ;;
         *) fail "unknown update target: $target" ;;
     esac
 
@@ -386,6 +396,10 @@ update_packages() {
 
     if [[ "$target" == all || "$target" == node ]]; then
         update_node
+    fi
+
+    if [[ "$target" == all || "$target" == zig ]]; then
+        update_zig
     fi
 
     if [[ "$target" == all ]]; then
@@ -517,7 +531,7 @@ _dots() {
   else
     case $words[2] in
       update)
-        (( CURRENT == 3 )) && _values 'update target' all system node rust editors tools
+        (( CURRENT == 3 )) && _values 'update target' all system node zig rust editors tools
         ;;
       theme)
         (( CURRENT == 3 )) && _values 'theme command' update
@@ -541,7 +555,7 @@ usage() {
     cat <<'USAGE'
 Commands:
   update [target]           Update packages (default: all).
-                           Targets: all, system, node, rust, editors, tools.
+                           Targets: all, system, node, zig, rust, editors, tools.
   theme update            Sync Catppina themes and apply dotfiles.
   apply                    Apply dotfiles through chezmoi.
   diff                     Preview dotfile changes.
@@ -554,7 +568,7 @@ USAGE
 
 case "${1:-}" in
     update)
-        (($# <= 2)) || fail 'usage: dots update [all|system|node|rust|editors|tools]'
+        (($# <= 2)) || fail 'usage: dots update [all|system|node|zig|rust|editors|tools]'
         require_command chezmoi
         update_packages "${2:-all}"
         ;;

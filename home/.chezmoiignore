@@ -1,10 +1,10 @@
 {{- if ne .profile "pinamac" }}
-**/10-profile-pinamac.sh
+**/010-profile-pinamac.sh
 .config/ghostty/**
 .config/zed/**
 {{- end }}
 
 {{- if ne .profile "isl-server" }}
-**/10-profile-isl-server.sh
-**/90-isl-server-tools.sh
+**/010-profile-isl-server.sh
+**/100-isl-server-tools.sh
 {{- end }}

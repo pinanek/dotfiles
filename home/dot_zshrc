@@ -13,6 +13,7 @@ export MITOS_RUNTIME="$XDG_DATA_HOME/mitos/source/runtime"
 # ── PATH ─────────────────────────────────────────────────────
 
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+export ZVM_INSTALL="$HOME/.zvm/self"
 
 # `path` is zsh's array representation of $PATH.
 # `-U` automatically removes duplicate entries.
@@ -20,6 +21,8 @@ typeset -U path PATH
 
 path=(
   "$XDG_BIN_HOME"
+  "${ZVM_PATH:-$HOME/.zvm}/bin"
+  "$ZVM_INSTALL"
   "$HOME/.cargo/bin"
   "$HOME/.deno/bin"
   "$XDG_DATA_HOME/go/bin"
@@ -157,6 +160,11 @@ fi
 if (( $+commands[fnm] )); then
   eval "$(fnm env --use-on-cd --shell zsh)"
   eval "$(fnm completions --shell zsh)"
+fi
+
+# zvm
+if (( $+commands[zvm] )); then
+  eval "$(zvm env --shell zsh --use-on-cd)"
 fi
 
 # pnpm
