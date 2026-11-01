@@ -39,6 +39,13 @@ name = "python"
 language-servers = ["ty", "ruff"]
 formatter = { command = "ruff", args = ["format", "-"] }
 
+[[language]]
+name = "typst"
+language-servers = ["tinymist"]
+
+[language-server.tinymist]
+command = "tinymist"
+
 # LSP config stuff
 # Python
 [language-server.ty]
